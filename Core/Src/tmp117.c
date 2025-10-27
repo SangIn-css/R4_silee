@@ -1,8 +1,8 @@
 
 #include "tmp117.h"
 
-int16_t CR;		//value of Configuration Register
-
+int16_t CR;		// value of Configuration Register
+int16_t TR;		// value of Temperature Register
 
 int16_t Tmp117_Init (I2C_HandleTypeDef *hi2c){
 
@@ -32,32 +32,23 @@ int16_t Tmp117_Init (I2C_HandleTypeDef *hi2c){
 
 float Tmp117_Read(I2C_HandleTypeDef *hi2c)
 {
+
     uint8_t reg = TMP117_TEMP_REG;
     uint8_t rx_buf[2];
 
     HAL_I2C_Master_Transmit(hi2c, TMP117_ADDR, &reg, 1, HAL_MAX_DELAY);
     HAL_I2C_Master_Receive(hi2c, TMP117_ADDR, rx_buf, 2, HAL_MAX_DELAY);
 
-    int16_t rx = (int16_t)((rx_buf[0] << 8) | rx_buf[1]);
-    float temp = rx * 0.0078125f;			//convert 16Bit to decimal Temperature
-    return temp;
+    TR = (int16_t)((rx_buf[0] << 8) | rx_buf[1]);
+    float temp =  TR * 0.0078125f;		//convert 16Bit to decimal Temperature
 
+    return temp;
 
 }
 
 int16_t Tmp117_Read_Bit(I2C_HandleTypeDef *hi2c)
 {
-    uint8_t reg = TMP117_TEMP_REG;
-    uint8_t rx_buf[2];
-
-    if (HAL_I2C_Master_Transmit(hi2c, TMP117_ADDR, &reg, 1, HAL_MAX_DELAY) != HAL_OK)
-        return -999.0f;
-
-    if (HAL_I2C_Master_Receive(hi2c, TMP117_ADDR, rx_buf, 2, HAL_MAX_DELAY) != HAL_OK)
-        return -999.0f;
-
-    int16_t rx = (int16_t)((rx_buf[0] << 8) | rx_buf[1]);
-    return rx;
+	return TR;
 }
 
 int16_t isDataReady() {

@@ -48,29 +48,29 @@ static void COM_DoCommand(const char *line)
     	int16_t  tmp = Tmp117_Init(s_hi2c);
     	printf("Register = %04x \n", tmp);
 
-    	int cnt = 0;
-    	while(cnt < 100) {
-			if(isDataReady()) {
+//    	int cnt = 0;
+//    	while(cnt < 100) {
+//			if(isDataReady()) {
 //				HAL_Delay(2);
 				float temp = Tmp117_Read(s_hi2c);
 				printf("Temperature = %.2f C\r\n", temp);
 
 				int16_t temp_bit = Tmp117_Read_Bit(s_hi2c);
 				printf("Temp Bit = %04x \n", temp_bit);
-			}
-			cnt++;
+//			}
+//			cnt++;
 		}
         int16_t temp_bit = Tmp117_Read_Bit(s_hi2c);
         printf("Temp Bit = %04x \n", temp_bit);
 
     }
 
-    else {
-        HAL_UART_Transmit(s_huart, (uint8_t*)"ERR: Unknown cmd\r\n", 18, HAL_MAX_DELAY);
-    }
-
-    HAL_UART_Transmit(s_huart, (uint8_t*)tx_banner, sizeof(tx_banner) - 1, HAL_MAX_DELAY);
-}
+//    else {
+//        HAL_UART_Transmit(s_huart, (uint8_t*)"ERR: Unknown cmd\r\n", 18, HAL_MAX_DELAY);
+//    }
+//
+//    HAL_UART_Transmit(s_huart, (uint8_t*)tx_banner, sizeof(tx_banner) - 1, HAL_MAX_DELAY);
+//}
 
 void COM_OnRxChar(uint8_t ch)
 {
