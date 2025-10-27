@@ -9,8 +9,8 @@ extern TIM_HandleTypeDef htim2;
 
 #define RX_LINE_MAX 64
 
-static UART_HandleTypeDef *s_huart;
-static I2C_HandleTypeDef  *s_hi2c;
+static UART_HandleTypeDef *c_huart;
+static I2C_HandleTypeDef  *t_hi2c;
 static uint8_t  s_line[RX_LINE_MAX];
 static uint16_t s_idx = 0;
 
@@ -22,11 +22,12 @@ static const uint8_t tx_banner[] =
 
 void COM_Init(UART_HandleTypeDef *huart, I2C_HandleTypeDef *hi2c)
 {
-    s_huart = huart;
-    s_hi2c  = hi2c;
+    c_huart = huart;
+    t_hi2c  = hi2c;
 
-    HAL_UART_Transmit(s_huart, (uint8_t*)tx_banner, sizeof(tx_banner) - 1, HAL_MAX_DELAY);
+    HAL_UART_Transmit(c_huart, (uint8_t*)tx_banner, sizeof(tx_banner) - 1, HAL_MAX_DELAY);
 }
+
 
 static void COM_DoCommand(const char *line)
 {
@@ -37,7 +38,7 @@ static void COM_DoCommand(const char *line)
 
     if (strstr(line, "LDON")) {
         LD_Start();
-        HAL_UART_Transmit(s_huart, (uint8_t*)"LD set HIGH\r\n", 13, HAL_MAX_DELAY);
+        HAL_UART_Transmit(c_huart, (uint8_t*)"LD set HIGH\r\n", 13, HAL_MAX_DELAY);
     }
 
 
@@ -45,32 +46,32 @@ static void COM_DoCommand(const char *line)
 
     else if (strstr(line, "RTMP")) {
 
-    	int16_t  tmp = Tmp117_Init(s_hi2c);
+    	int16_t  tmp = Tmp117_Init(t_hi2c);
     	printf("Register = %04x \n", tmp);
 
-//    	int cnt = 0;
-//    	while(cnt < 100) {
-//			if(isDataReady()) {
-//				HAL_Delay(2);
-				float temp = Tmp117_Read(s_hi2c);
+    	int cnt = 0;
+    	while(cnt < 30) {
+			if(isDataReady()) {
+				float temp = Tmp117_Read(t_hi2c);
 				printf("Temperature = %.2f C\r\n", temp);
 
-				int16_t temp_bit = Tmp117_Read_Bit(s_hi2c);
+				int16_t temp_bit = Tmp117_Read_Bit(t_hi2c);
 				printf("Temp Bit = %04x \n", temp_bit);
-//			}
-//			cnt++;
+			}
+			cnt++;
 		}
-        int16_t temp_bit = Tmp117_Read_Bit(s_hi2c);
+        int16_t temp_bit = Tmp117_Read_Bit(t_hi2c);
         printf("Temp Bit = %04x \n", temp_bit);
 
     }
 
-//    else {
-//        HAL_UART_Transmit(s_huart, (uint8_t*)"ERR: Unknown cmd\r\n", 18, HAL_MAX_DELAY);
-//    }
-//
-//    HAL_UART_Transmit(s_huart, (uint8_t*)tx_banner, sizeof(tx_banner) - 1, HAL_MAX_DELAY);
-//}
+    else {
+        HAL_UART_Transmit(c_huart, (uint8_t*)"ERR: Unknown cmd\r\n", 18, HAL_MAX_DELAY);
+    }
+
+    HAL_UART_Transmit(c_huart, (uint8_t*)tx_banner, sizeof(tx_banner) - 1, HAL_MAX_DELAY);
+}
+
 
 void COM_OnRxChar(uint8_t ch)
 {
@@ -86,7 +87,7 @@ void COM_OnRxChar(uint8_t ch)
         s_line[s_idx++] = ch;
     } else {
         s_idx = 0;
-        HAL_UART_Transmit(s_huart, (uint8_t*)"\r\nERR: line too long\r\n", 22, HAL_MAX_DELAY);
-        HAL_UART_Transmit(s_huart, (uint8_t*)tx_banner, sizeof(tx_banner) - 1, HAL_MAX_DELAY);
+        HAL_UART_Transmit(c_huart, (uint8_t*)"\r\nERR: line too long\r\n", 22, HAL_MAX_DELAY);
+        HAL_UART_Transmit(c_huart, (uint8_t*)tx_banner, sizeof(tx_banner) - 1, HAL_MAX_DELAY);
     }
 }
