@@ -1,6 +1,4 @@
-../Core/Src/tmp117.c:9:6:Tmp117_Init	1
-../Core/Src/tmp117.c:37:6:Tmp117_Start	1
-../Core/Src/tmp117.c:42:6:Tmp117_Stop	1
-../Core/Src/tmp117.c:47:6:Tmp117_Read	2
-../Core/Src/tmp117.c:68:6:Tmp117_Read_Bit	1
-../Core/Src/tmp117.c:73:9:isDataReady	1
+../Core/Src/tmp117.c:8:6:Tmp117_Init	1
+../Core/Src/tmp117.c:30:6:Tmp117_Read	2
+../Core/Src/tmp117.c:48:6:Tmp117_Read_Bit	1
+../Core/Src/tmp117.c:53:9:isDataReady	1
