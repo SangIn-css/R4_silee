@@ -1,8 +1,10 @@
-
+#include "main.h"
 #include "tmp117.h"
 
 int16_t CR;		// value of Configuration Register
 int16_t TR;		// value of Temperature Register
+uint32_t t = 0;
+uint32_t tmpt = 0;
 
 void Tmp117_Init(I2C_HandleTypeDef *hi2c){
 
@@ -27,43 +29,56 @@ void Tmp117_Init(I2C_HandleTypeDef *hi2c){
 
 //	CR = (int16_t)((rx_buf[0] << 8) | rx_buf[1]);
 //	return CR;
+
+	Tmp117_Start();
 }
 
 
-int16_t isDataReady(I2C_HandleTypeDef *hi2c) {
+void Tmp117_Start() {
 
-	uint8_t rx_buf[2];
-
-	HAL_I2C_Master_Receive(hi2c, TMP117_ADDR, rx_buf, 2, HAL_MAX_DELAY);			//check
-
-	CR = (int16_t)((rx_buf[0] << 8) | rx_buf[1]);
-	int16_t bool = CR & 0x2000;				// Is Data_Ready Register set
-	return bool;
 }
 
 
-float Tmp117_Read(I2C_HandleTypeDef *hi2c)
+void Tmp117_Stop() {
+
+}
+
+
+void Tmp117_Read(I2C_HandleTypeDef *hi2c)
 {
 
     uint8_t reg = TMP117_TEMP_REG;
     uint8_t rx_buf[2];
+    uint32_t tm = HAL_GetTick();
 
-    if(isDataReady(hi2c)) {
-//    	HAL_Delay(1000);
-    	HAL_I2C_Master_Transmit(hi2c, TMP117_ADDR, &reg, 1, HAL_MAX_DELAY);
-    	HAL_I2C_Master_Receive(hi2c, TMP117_ADDR, rx_buf, 2, HAL_MAX_DELAY);
+	if(isDataReady(hi2c)) {
+		HAL_I2C_Master_Transmit(hi2c, TMP117_ADDR, &reg, 1, HAL_MAX_DELAY);
+		HAL_I2C_Master_Receive(hi2c, TMP117_ADDR, rx_buf, 2, HAL_MAX_DELAY);
 
 		TR = (int16_t)((rx_buf[0] << 8) | rx_buf[1]);
 		float temp =  TR * 0.0078125f;		//convert 16Bit to decimal Temperature
 
-		return temp;
-    }
-    else {
-    	return 1.1;
-    }
+		printf("Temperature = %.2f C\r\n", temp);
+		Tmp117_Read_Bit(hi2c);
+		printf("%04x\n", tm);
+	}
+
 }
 
-int16_t Tmp117_Read_Bit(I2C_HandleTypeDef *hi2c)
+void Tmp117_Read_Bit(I2C_HandleTypeDef *hi2c)
 {
-	return TR;
+	printf("Temp Bit = %04x \n", TR);
+}
+
+int16_t isDataReady(I2C_HandleTypeDef *hi2c) {
+
+	uint8_t rx_buf[2];
+	uint8_t conf = 0x01;	// Configuration Register Address
+
+	HAL_I2C_Master_Transmit(hi2c,TMP117_ADDR, &conf, 1, HAL_MAX_DELAY);			//Register Pointer
+	HAL_I2C_Master_Receive(hi2c, TMP117_ADDR, rx_buf, 2, HAL_MAX_DELAY);
+
+	CR = (int16_t)((rx_buf[0] << 8) | rx_buf[1]);
+	int16_t bool = CR & 0x2000;				// Is Data_Ready Register set
+	return bool;
 }

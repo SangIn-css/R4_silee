@@ -47,24 +47,10 @@ static void COM_DoCommand(const char *line)
 
     else if (strstr(line, "RTMP")) {
 
-//    	int16_t  tmp = Tmp117_Init(t_hi2c);
-//    	printf("Register = %04x \n", tmp);
-
     	Tmp117_Init(t_hi2c);
-    	HAL_Delay(1000);
-    	int cnt = 0;
-    	while(cnt < 30) {
-			float temp = Tmp117_Read(t_hi2c);
-			printf("Temperature = %.2f C\r\n", temp);
-
-			int16_t temp_bit = Tmp117_Read_Bit(t_hi2c);
-			printf("Temp Bit = %04x \n", temp_bit);
-
-			cnt++;
-//			HAL_Delay(1000);
+    	while(1) {
+			Tmp117_Read(t_hi2c);
 	}
-    int16_t temp_bit = Tmp117_Read_Bit(t_hi2c);
-    printf("Temp Bit = %04x \n", temp_bit);
 
     HAL_UART_Transmit(c_huart, (uint8_t*)tx_banner, sizeof(tx_banner) - 1, HAL_MAX_DELAY);
 
