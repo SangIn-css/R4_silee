@@ -7,8 +7,9 @@ extern "C" {
 
 #include "stm32f4xx_hal.h"
 
-void COM_Init(UART_HandleTypeDef *huart, I2C_HandleTypeDef *hi2c);
-void COM_OnRxChar(uint8_t ch);
+void Com_Init(UART_HandleTypeDef *huart, I2C_HandleTypeDef *hi2c);
+static void Com_DoCommand(const char *line);
+void Com_OnRxChar(uint8_t ch);
 
 #ifdef __cplusplus
 }

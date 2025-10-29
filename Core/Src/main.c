@@ -113,7 +113,7 @@ int main(void)
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
     HAL_UART_Receive_IT(&huart1, &rx_ch, 1);		// use for UART (TeraTerm)
-    COM_Init(&huart1, &hi2c2);
+    Com_Init(&huart1, &hi2c2);
 
   /* USER CODE END 2 */
 
@@ -194,7 +194,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 
  if (huart->Instance == USART1)
   {
-	 COM_OnRxChar(rx_ch);
+	 Com_OnRxChar(rx_ch);
      HAL_UART_Receive_IT(&huart1, &rx_ch, 1);
   }
 
