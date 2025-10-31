@@ -2,8 +2,8 @@
 #include "tmp117.h"
 #include <stdio.h>
 
-int16_t CR;		// value of Configuration Register
-int16_t TR;		// value of Temperature Register
+uint16_t CR;		// value of Configuration Register
+uint16_t TR;		// value of Temperature Register
 uint8_t cnt = 0;
 
 void Tmp117_Init(I2C_HandleTypeDef *hi2c){
@@ -20,8 +20,8 @@ void Tmp117_Init(I2C_HandleTypeDef *hi2c){
 	uint8_t SR = 0x0;		// Software Reset bit						(0)
 
 	conf[0] = TMP117_CONF_REG;
-	conf[1] = (int16_t)( (MOD << 2) | (CONV1) );
-	conf[2] = (int16_t)( (CONV2 << 7) | (AVG << 5) | (TnA << 4) | (POL << 3) | (DRA << 2) | (SR << 1) );
+	conf[1] = (uint16_t)( (MOD << 2) | (CONV1) );
+	conf[2] = (uint16_t)( (CONV2 << 7) | (AVG << 5) | (TnA << 4) | (POL << 3) | (DRA << 2) | (SR << 1) );
 
 	HAL_Delay(50);
 	printf("Delayed\n");		//Delay for Preventing Hardware Error
@@ -42,7 +42,7 @@ void Tmp117_Read(I2C_HandleTypeDef *hi2c) {
 
 		printf("Conf Bit = %04x \n", CR);
 
-		TR = (int16_t)((rx_buf[0] << 8) | rx_buf[1]);
+		TR = (uint16_t)((rx_buf[0] << 8) | rx_buf[1]);
 		float temp =  TR * 0.0078125f;		//convert 16Bit to decimal Temperature
 
 		printf("Temperature = %.2f C\r\n", temp);
@@ -59,7 +59,7 @@ void Tmp117_Read_Bit(I2C_HandleTypeDef *hi2c)
 	printf("Temp Bit = %04x \n\n", TR);
 }
 
-int16_t isDataReady(I2C_HandleTypeDef *hi2c) {
+uint16_t isDataReady(I2C_HandleTypeDef *hi2c) {
 
 	uint8_t rx_buf[2];
 	uint8_t conf = 0x01;	// Configuration Register Address
@@ -67,7 +67,7 @@ int16_t isDataReady(I2C_HandleTypeDef *hi2c) {
 	HAL_I2C_Master_Transmit(hi2c,TMP117_ADDR, &conf, 1, HAL_MAX_DELAY);			//Register Pointer
 	HAL_I2C_Master_Receive(hi2c, TMP117_ADDR, rx_buf, 2, HAL_MAX_DELAY);
 
-	CR = (int16_t)((rx_buf[0] << 8) | rx_buf[1]);
-	int16_t bool = CR & 0x2000;				// Is Data_Ready Register set
+	CR = (uint16_t)((rx_buf[0] << 8) | rx_buf[1]);
+	uint16_t bool = CR & 0x2000;				// Is Data_Ready Register set
 	return bool;
 }

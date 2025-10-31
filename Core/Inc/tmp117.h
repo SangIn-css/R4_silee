@@ -15,7 +15,7 @@ extern "C" {
 void Tmp117_Init (I2C_HandleTypeDef *hi2c);
 void Tmp117_Read(I2C_HandleTypeDef *hi2c);
 void Tmp117_Read_Bit(I2C_HandleTypeDef *hi2c);
-int16_t isDataReady(I2C_HandleTypeDef *hi2c);
+uint16_t isDataReady(I2C_HandleTypeDef *hi2c);
 
 #ifdef __cplusplus
 }

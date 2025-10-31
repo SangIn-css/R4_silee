@@ -1,4 +1,4 @@
 ../Core/Src/tmp117.c:9:6:Tmp117_Init	40	static
 ../Core/Src/tmp117.c:34:6:Tmp117_Read	32	static
 ../Core/Src/tmp117.c:57:6:Tmp117_Read_Bit	16	static
-../Core/Src/tmp117.c:62:9:isDataReady	32	static
+../Core/Src/tmp117.c:62:10:isDataReady	32	static
