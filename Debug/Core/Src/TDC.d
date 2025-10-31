@@ -1,4 +1,4 @@
-Core/Src/com.o: ../Core/Src/com.c ../Core/Inc/main.h \
+Core/Src/TDC.o: ../Core/Src/TDC.c ../Core/Inc/main.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h \
  ../Core/Inc/stm32f4xx_hal_conf.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h \
@@ -33,7 +33,6 @@ Core/Src/com.o: ../Core/Src/com.c ../Core/Inc/main.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
- ../Core/Inc/com.h ../Core/Inc/tmp117.h ../Core/Inc/LD.h \
  ../Core/Inc/TDC.h
 ../Core/Inc/main.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
@@ -70,7 +69,4 @@ Core/Src/com.o: ../Core/Src/com.c ../Core/Inc/main.h \
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h:
-../Core/Inc/com.h:
-../Core/Inc/tmp117.h:
-../Core/Inc/LD.h:
 ../Core/Inc/TDC.h:

@@ -29,6 +29,7 @@
 /* USER CODE BEGIN Includes */
 #include "com.h"
 #include "tmp117.h"
+#include "TDC.h"
 #include "LD.h"
 /* USER CODE END Includes */
 
@@ -112,8 +113,9 @@ int main(void)
   MX_I2C2_Init();
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
-    HAL_UART_Receive_IT(&huart1, &rx_ch, 1);		// use for UART (TeraTerm)
-    Com_Init(&huart1, &hi2c2);
+  HAL_UART_Receive_IT(&huart1, &rx_ch, 1);		// use for UART (TeraTerm)
+  __HAL_SPI_ENABLE(&hspi2);
+  Com_Init(&huart1, &hi2c2, &hspi2);
 
   /* USER CODE END 2 */
 

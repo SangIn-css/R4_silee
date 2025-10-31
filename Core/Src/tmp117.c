@@ -19,7 +19,7 @@ void Tmp117_Init(I2C_HandleTypeDef *hi2c){
 	uint8_t DRA = 0x0;		// ALERT Pin select bit					(0)
 	uint8_t SR = 0x0;		// Software Reset bit						(0)
 
-	conf[0] = 0x01;			// Configuration Register Address
+	conf[0] = TMP117_CONF_REG;
 	conf[1] = (int16_t)( (MOD << 2) | (CONV1) );
 	conf[2] = (int16_t)( (CONV2 << 7) | (AVG << 5) | (TnA << 4) | (POL << 3) | (DRA << 2) | (SR << 1) );
 
