@@ -7,7 +7,7 @@ uint8_t TTR = 0x11;
 void TDC_Init(SPI_HandleTypeDef *hspi)
 {
 	uint8_t conf1[2];
-//	uint8_t conf2[2];
+	uint8_t conf2[2];
 	uint8_t pnt[2];
 	uint8_t rx[2];
 	uint8_t rx_buf;
@@ -23,16 +23,16 @@ void TDC_Init(SPI_HandleTypeDef *hspi)
 	uint8_t MEAS_MODE = 0x0;		// Measurement Mode				(10)
 	uint8_t START_MEAS = 0x1;		// 	Start New Measurement		(1)
 
-//	uint8_t CALIBRATION2_PERIODS = 0x1;		// 	Calibration by Force		(01)
-//	uint8_t AVG_CYCLES = 0x0;		// Parity Enable`	`									(000)
-//	uint8_t NUM_STOP = 0x0;		// Trigger Edge 	`										(000)
+	uint8_t CALIBRATION2_PERIODS = 0x1;		// 	Calibration by Force		(01)
+	uint8_t AVG_CYCLES = 0x0;		// Parity Enable`	`									(000)
+	uint8_t NUM_STOP = 0x0;		// Trigger Edge 	`										(000)
 
 	conf1[0] = (uint8_t)( (Auto_Inc << 7) | (RW << 6 ) | (TDC_CONF1_REG) );			//Configuration Register Address
 	conf1[1] = (uint8_t)( (FORCE_CAL << 7) | (PARITY_EN << 6) | (TRIGG_EDGE << 5) | (STOP_EDGE << 4)
 			| (START_EDGE << 3)| (MEAS_MODE << 1) | (START_MEAS) );
 
-//	conf2[0] = TDC_CONF2_REG;
-//	conf2[1] = (uint16_t)( (CALIBRATION2_PERIODS  << 6) | (AVG_CYCLES << 3) | (NUM_STOP));
+	conf2[0] = TDC_CONF2_REG;
+	conf2[1] = (uint16_t)( (CALIBRATION2_PERIODS  << 6) | (AVG_CYCLES << 3) | (NUM_STOP));
 
 
 	HAL_GPIO_WritePin(GPIOB, SPI2_CS1_TDC_PB06_Pin, GPIO_PIN_RESET);
