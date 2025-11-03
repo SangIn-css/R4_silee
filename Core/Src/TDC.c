@@ -1,6 +1,7 @@
 #include "main.h"
 #include "TDC.h"
 #include "tim.h"
+#include "LD.h"
 #include <stdio.h>
 
 uint16_t TDC_CR = 0x0000;		//Configuration Register
@@ -22,14 +23,15 @@ void TDC_Init(SPI_HandleTypeDef *hspi)
 	printf("cal1 3 = %04x\n", cal1[2]);
 }
 
+
 void TDC_Transmit_Start() {
 
-	HAL_TIM_Base_Start_IT(&htim6);
 	HAL_GPIO_WritePin(GPIOB,REF_SIG_PB08_Pin,GPIO_PIN_SET);
-	delay_us(10);
+	delay_11p1_ns(1);
 	HAL_GPIO_WritePin(GPIOB,REF_SIG_PB08_Pin,GPIO_PIN_RESET);
 	printf("Start\n");
 }
+
 
 void TDC_Conf1_Init(SPI_HandleTypeDef *hspi) {
 

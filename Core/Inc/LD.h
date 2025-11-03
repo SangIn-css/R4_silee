@@ -9,6 +9,7 @@ extern "C" {
 
 void LD_Start(void);
 void LD_ON(void);
+void delay_11p1_ns(uint8_t time);
 
 #ifdef __cplusplus
 }
