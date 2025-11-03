@@ -1,1 +1,3 @@
 ../Core/Src/TDC.c:7:6:TDC_Init	1
+../Core/Src/TDC.c:18:6:TDC_Conf1_Init	1
+../Core/Src/TDC.c:60:6:TDC_Conf2_Init	1
