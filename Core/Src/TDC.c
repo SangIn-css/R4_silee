@@ -1,8 +1,10 @@
 #include "main.h"
 #include "TDC.h"
+#include "tim.h"
 #include <stdio.h>
 
 uint16_t TDC_CR = 0x0000;		//Configuration Register
+uint8_t cal1[3];
 
 void TDC_Init(SPI_HandleTypeDef *hspi)
 {
@@ -11,8 +13,22 @@ void TDC_Init(SPI_HandleTypeDef *hspi)
 	TDC_Conf2_Init(hspi);
 	printf("Configuration = %04x\n", TDC_CR);
 
-//	TDC_Dst_Read (hspi);
+	TDC_Transmit_Start();
 
+	TDC_Read_Cal1(hspi);
+
+	printf("cal1 1 = %04x\n", cal1[0]);
+	printf("cal1 2 = %04x\n", cal1[1]);
+	printf("cal1 3 = %04x\n", cal1[2]);
+}
+
+void TDC_Transmit_Start() {
+
+	HAL_TIM_Base_Start_IT(&htim6);
+	HAL_GPIO_WritePin(GPIOB,REF_SIG_PB08_Pin,GPIO_PIN_SET);
+	delay_us(10);
+	HAL_GPIO_WritePin(GPIOB,REF_SIG_PB08_Pin,GPIO_PIN_RESET);
+	printf("Start\n");
 }
 
 void TDC_Conf1_Init(SPI_HandleTypeDef *hspi) {
@@ -63,8 +79,8 @@ void TDC_Conf2_Init(SPI_HandleTypeDef *hspi) {
 	uint8_t Auto_Inc = 0x0;			// Auto Increment mode				(0)
 	uint8_t RW = 0x1;					//Read Write								(1)
 
-	uint8_t CALIBRATION2_PERIODS = 0x1;		// 	Calibration Period				(01)
-	uint8_t AVG_CYCLES = 0x0;		// The number of Measurement Cycles	`	(000)
+	uint8_t CALIBRATION2_PERIODS = 0x2;		// 	Calibration Period				(10)
+	uint8_t AVG_CYCLES = 0x6;		// The number of Measurement Cycles	`	(110)
 	uint8_t NUM_STOP = 0x1;		// The number of STOP 	`								(001)
 
 	uint8_t conf[2];
@@ -93,8 +109,24 @@ void TDC_Conf2_Init(SPI_HandleTypeDef *hspi) {
 	TDC_CR |= (uint16_t)rcv_bit[1];
 }
 
+void TDC_Read_Cal1(SPI_HandleTypeDef *hspi) {
+
+	uint8_t Auto_Inc = 0x0;
+	uint8_t RW = 0x0;
+	uint8_t wrt_pnt[2];
+
+	wrt_pnt[0] = (uint8_t)( (Auto_Inc << 7) | (RW << 6 ) | (TDC_CAL1_REG) );
+	wrt_pnt[1] = 0x00;		//dummy
+	wrt_pnt[2] = 0x00;
+
+	HAL_GPIO_WritePin(GPIOB, SPI2_CS1_TDC_PB06_Pin, GPIO_PIN_RESET);
+	HAL_SPI_TransmitReceive(hspi, wrt_pnt, cal1, 3, HAL_MAX_DELAY);
+	HAL_GPIO_WritePin(GPIOB, SPI2_CS1_TDC_PB06_Pin, GPIO_PIN_SET);
+	RW = 0x1;
+}
+
 //uint16_t TDC_Dst_Calc(SPI_HandleTypeDef *hspi) {
-//	dst = c * ToF;
+//	dst = c * ToF / 2;
 //	ToF = (t1 - tn) * norm_LSB + (clk_Cnt_n) * (clk_Period);
 //	norm_LSB = clk_Period / cal_Count;
 //	cal_Count = (cali2 - cali1) / ((cali2_Period) - 1);

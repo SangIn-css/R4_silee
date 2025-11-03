@@ -2,6 +2,7 @@
 #include "com.h"
 #include "tmp117.h"
 #include "LD.h"
+#include "TDC.h"
 #include "stm32f4xx_hal.h"
 #include <string.h>
 #include <stdio.h>

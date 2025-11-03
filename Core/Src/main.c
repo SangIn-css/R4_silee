@@ -42,6 +42,7 @@
 /* USER CODE BEGIN PD */
 extern I2C_HandleTypeDef hi2c2;
 extern UART_HandleTypeDef huart1;
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -66,6 +67,11 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+
+void delay_us(uint16_t time) {
+	__HAL_TIM_SET_COUNTER(&htim6, 0);
+	while((__HAL_TIM_GET_COUNTER(&htim6))<time);
+}
 
 int __io_putchar(int ch){
  	uint8_t c = (uint8_t)ch;
@@ -112,6 +118,7 @@ int main(void)
   MX_TIM3_Init();
   MX_I2C2_Init();
   MX_TIM2_Init();
+  MX_TIM6_Init();
   /* USER CODE BEGIN 2 */
   HAL_UART_Receive_IT(&huart1, &rx_ch, 1);		// use for UART (TeraTerm)
   __HAL_SPI_ENABLE(&hspi2);
@@ -188,7 +195,11 @@ void SystemClock_Config(void)
 
 // Turn on LD by using TIM2 //
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
-	LD_ON();
+
+	if (htim->Instance == htim2.Instance) {
+		LD_ON();
+		HAL_GPIO_WritePin(GPIOB,IND_GRN_LED_PB09_Pin,GPIO_PIN_SET);
+	}
 }
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
