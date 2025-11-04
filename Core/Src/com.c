@@ -44,7 +44,6 @@ void Com_DoCommand(const char *line)
 
     if (strstr(line, "LDON")) {
         LD_Start();
-        HAL_UART_Transmit(c_huart, (uint8_t*)"LD set HIGH\r\n", 13, HAL_MAX_DELAY);
     }
 
 
@@ -53,16 +52,15 @@ void Com_DoCommand(const char *line)
     else if (strstr(line, "RTMP")) {
 
     	Tmp117_Init(t_hi2c);
-    	while(1) {
+
+    	while(cnt < 10) {
 			Tmp117_Read(t_hi2c);
-			if(cnt > 10) {
-				break;
-			}
     	}
     }
 
     else if (strstr(line, "RDIS")) {
     	TDC_Init(t_hspi);
+    	TDC_Do_Read(t_hspi);
     }
 
     HAL_UART_Transmit(c_huart, (uint8_t*)start_txt, sizeof(start_txt) - 1, HAL_MAX_DELAY);

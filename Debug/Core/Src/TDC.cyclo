@@ -1,5 +1,6 @@
 ../Core/Src/TDC.c:10:6:TDC_Init	1
-../Core/Src/TDC.c:27:6:TDC_Transmit_Start	1
-../Core/Src/TDC.c:36:6:TDC_Conf1_Init	1
-../Core/Src/TDC.c:79:6:TDC_Conf2_Init	1
-../Core/Src/TDC.c:114:6:TDC_Read_Cal1	1
+../Core/Src/TDC.c:20:6:TDC_Conf1_Init	1
+../Core/Src/TDC.c:63:6:TDC_Conf2_Init	1
+../Core/Src/TDC.c:98:6:TDC_Do_Read	1
+../Core/Src/TDC.c:106:6:TDC_Read_Time1	1
+../Core/Src/TDC.c:131:6:TDC_Read_Time2	1

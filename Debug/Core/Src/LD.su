@@ -1,3 +1,2 @@
-../Core/Src/LD.c:5:6:LD_Start	8	static
-../Core/Src/LD.c:11:6:LD_ON	8	static
-../Core/Src/LD.c:19:6:delay_11p1_ns	16	static
+../Core/Src/LD.c:6:6:LD_Start	8	static
+../Core/Src/LD.c:12:6:LD_ON	8	static

@@ -24,9 +24,11 @@ extern "C" {
 #define C						3 * (10^8)
 
 void TDC_Init(SPI_HandleTypeDef *hspi);
-void TDC_Transmit_Start();
 void TDC_Conf1_Init(SPI_HandleTypeDef *hspi);
 void TDC_Conf2_Init(SPI_HandleTypeDef *hspi);
+void TDC_Do_Read(SPI_HandleTypeDef *hspi);
+void TDC_Read_Time1(SPI_HandleTypeDef *hspi);
+void TDC_Read_Time2(SPI_HandleTypeDef *hspi);
 void TDC_Read_Cal1(SPI_HandleTypeDef *hspi);
 //uint16_t TDC_Dst_Calc(SPI_HandleTypeDef *hspi);
 
