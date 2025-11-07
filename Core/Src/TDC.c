@@ -24,7 +24,7 @@ void TDC_Conf1_Init(SPI_HandleTypeDef *hspi) {
 
 
 	uint8_t FORCE_CAL = 0x0;		// 	Calibration by Force				(0)
-	uint8_t PARITY_EN = 0x1;		// Parity Enable`	`						(1)
+	uint8_t PARITY_EN = 0x0;		// Parity Enable`	`						(0)
 	uint8_t TRIGG_EDGE = 0x0;		// Trigger Edge 	`					(0)
 	uint8_t STOP_EDGE = 0x0;		// 	Stop Edge								(0)
 	uint8_t START_EDGE = 0x0;		// Start Edge							(0)
@@ -95,16 +95,43 @@ void TDC_Conf2_Init(SPI_HandleTypeDef *hspi) {
 	TDC_CR |= (uint16_t)rcv_bit[1];
 }
 
-void TDC_Do_Read(SPI_HandleTypeDef *hspi) {
+//void TDC_Do_Read(SPI_HandleTypeDef *hspi) {
+//
+//	LD_Start();
+//
+//}
 
-	LD_ON();
-	TDC_Read_Time1(hspi);
-	TDC_Read_Time2(hspi);
-//	TDC_Read_Cal1(hspi);
-}
+
+//void TDC_Read(SPI_HandleTypeDef *hspi, TDC_REG) {
+//
+//	uint8_t Auto_Inc = 0x0;
+//	uint8_t RW = 0x0;
+//	uint8_t wrt_pnt[2];
+//	uint8_t time[4];
+//
+//	wrt_pnt[0] = (uint8_t)( (Auto_Inc << 7) | (RW << 6 ) | (TDC_REG) );
+//	wrt_pnt[1] = 0x0;
+//	wrt_pnt[2] = 0x0;
+//	wrt_pnt[3] = 0x0;
+//
+//	HAL_GPIO_WritePin(GPIOB, SPI2_CS1_TDC_PB06_Pin, GPIO_PIN_RESET);
+//	HAL_SPI_TransmitReceive(hspi, wrt_pnt, time, 4, HAL_MAX_DELAY);
+//	HAL_GPIO_WritePin(GPIOB, SPI2_CS1_TDC_PB06_Pin, GPIO_PIN_SET);
+//
+//	printf("time2 1 = %02x\n", time[1]);
+//	printf("time2 2 = %02x\n", time[2]);
+//	printf("time2 3 = %02x\n", time[3]);
+//
+//	uint32_t tim = ( (time[1] << 16) | (time[2] << 8) | (time[3]) );
+//	printf("time2 = %06x\n", (unsigned int)tim);
+
+//}
+
 
 void TDC_Read_Time1(SPI_HandleTypeDef *hspi) {
 
+
+//	TDC_Read(hspi, TDC_TIME1_REG);
 	uint8_t Auto_Inc = 0x0;
 	uint8_t RW = 0x0;
 	uint8_t wrt_pnt[2];
@@ -202,6 +229,44 @@ void TDC_Read_Cal2(SPI_HandleTypeDef *hspi) {
 
 	uint32_t cali = ( (cal[1] << 16) | (cal[2] << 8) | (cal[3]) );
 	printf("cal2 = %06x\n", (unsigned int)cali);
+
+}
+
+
+void TDC_Write_Data(uint8_t addr, uint8_t data)
+{
+	uint16_t val = addr;
+	val |= 0x40U;
+	val <<= 8;
+	val |= data;
+
+	GPIOB->BSRR = SPI2_CS1_TDC_PB06_Pin << 16U; //비선택
+	GPIOB->BSRR = SPI2_CS2_TDC_PB07_Pin << 16U;
+#if 1
+    SPI2->DR = val;
+	while ((SPI2->SR & SPI_FLAG_TXE) == (uint16_t)RESET)
+	{
+		;
+	}
+	while ((SPI2->SR & SPI_FLAG_RXNE) == (uint16_t)RESET)
+	{
+		;
+	}
+	SPI2->DR;
+
+#else
+	if(HAL_SPI_Transmit(&hspi2, (uint8_t*)val, 2, 100) != HAL_OK)
+    {
+      txString("TDCWriteData_SPI_Error\r\n");
+    }
+#endif
+
+	GPIOB->BSRR = SPI2_CS1_TDC_PB06_Pin; //선택(SPI통신)
+	GPIOB->BSRR = SPI2_CS2_TDC_PB07_Pin;
+}
+
+void TDCWriteData(uint8_t addr, uint8_t data)
+{
 
 }
 

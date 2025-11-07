@@ -10,6 +10,9 @@ extern "C" {
 void LD_Start(void);
 void LD_ON(void);
 
+void DelayUs(uint32_t us);
+void DelayMs(uint32_t ms);
+
 #ifdef __cplusplus
 }
 #endif

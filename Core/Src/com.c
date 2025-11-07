@@ -40,14 +40,14 @@ void Com_DoCommand(const char *line)
     if (line[0] == '\0') return;
 
 
-    //LDON
+    //LDON (Turn on LD)
 
     if (strstr(line, "LDON")) {
         LD_Start();
     }
 
 
-    //RTMP
+    //RTMP (Read Temperature)
 
     else if (strstr(line, "RTMP")) {
 
@@ -58,9 +58,11 @@ void Com_DoCommand(const char *line)
     	}
     }
 
+
+    //RDIS (Read Distance)
     else if (strstr(line, "RDIS")) {
-    	TDC_Init(t_hspi);
-    	TDC_Do_Read(t_hspi);
+    	LD_Start();
+
     }
 
     HAL_UART_Transmit(c_huart, (uint8_t*)start_txt, sizeof(start_txt) - 1, HAL_MAX_DELAY);
