@@ -1,8 +1,9 @@
 ../Core/Src/TDC.c:10:6:TDC_Init	1
 ../Core/Src/TDC.c:20:6:TDC_Conf1_Init	1
-../Core/Src/TDC.c:63:6:TDC_Conf2_Init	1
-../Core/Src/TDC.c:131:6:TDC_Read_Time1	1
-../Core/Src/TDC.c:158:6:TDC_Read_Time2	1
-../Core/Src/TDC.c:184:6:TDC_Read_Cal1	1
-../Core/Src/TDC.c:210:6:TDC_Read_Cal2	1
-../Core/Src/TDC.c:236:6:TDCWriteData	3
+../Core/Src/TDC.c:47:6:TDC_Conf2_Init	1
+../Core/Src/TDC.c:115:6:TDC_Read_Time1	1
+../Core/Src/TDC.c:142:6:TDC_Read_Time2	1
+../Core/Src/TDC.c:168:6:TDC_Read_Cal1	1
+../Core/Src/TDC.c:194:6:TDC_Read_Cal2	1
+../Core/Src/TDC.c:220:6:TDC_Write_Data	3
+../Core/Src/TDC.c:246:6:TDC_Read_Data	9

@@ -117,7 +117,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
   HAL_UART_Receive_IT(&huart1, &rx_ch, 1);		// use for UART (TeraTerm)
   __HAL_SPI_ENABLE(&hspi2);
-  TDC_Init(&hspi2);
+//  TDC_Init(&hspi2);
   Com_Init(&huart1, &hi2c2, &hspi2);
 
   /* USER CODE END 2 */

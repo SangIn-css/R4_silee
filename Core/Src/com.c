@@ -61,6 +61,7 @@ void Com_DoCommand(const char *line)
 
     //RDIS (Read Distance)
     else if (strstr(line, "RDIS")) {
+    	TDC_Init(t_hspi);
     	LD_Start();
 
     }

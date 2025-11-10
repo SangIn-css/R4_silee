@@ -24,10 +24,10 @@ void LD_ON(void)
 	HAL_GPIO_WritePin(GPIOB, LD_TRIG_PB02_Pin, GPIO_PIN_SET);
 	HAL_GPIO_WritePin(GPIOB, LD_TRIG_PB02_Pin, GPIO_PIN_RESET);
 
-	TDC_Read_Time1(&hspi2);
-	TDC_Read_Time2(&hspi2);
-	TDC_Read_Cal1(&hspi2);
-	TDC_Read_Cal2(&hspi2);
+//	TDC_Read_Time1(&hspi2);
+//	TDC_Read_Time2(&hspi2);
+//	TDC_Read_Cal1(&hspi2);
+//	TDC_Read_Cal2(&hspi2);
 
 }
 

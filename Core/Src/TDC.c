@@ -19,35 +19,19 @@ void TDC_Init(SPI_HandleTypeDef *hspi)
 
 void TDC_Conf1_Init(SPI_HandleTypeDef *hspi) {
 
-	uint8_t Auto_Inc = 0x0;			// Auto Increment mode				(0)
-	uint8_t RW = 0x1;					// Read Write (Write)					(1)
+	uint8_t conf1_Data = 0x0;	//
 
-
-	uint8_t FORCE_CAL = 0x0;		// 	Calibration by Force				(0)
-	uint8_t PARITY_EN = 0x0;		// Parity Enable`	`						(0)
-	uint8_t TRIGG_EDGE = 0x0;		// Trigger Edge 	`					(0)
-	uint8_t STOP_EDGE = 0x0;		// 	Stop Edge								(0)
-	uint8_t START_EDGE = 0x0;		// Start Edge							(0)
-	uint8_t MEAS_MODE = 0x0;		// Measurement Mode				(00)
-	uint8_t START_MEAS = 0x1;		// 	Start New Measurement		(1)
-
-	uint8_t conf[2];
 	uint8_t rcv_bit[2];
 	uint8_t wrt_pnt[2];
 
-	conf[0] = (uint8_t)( (Auto_Inc << 7) | (RW << 6 ) | (TDC_CONF1_REG) );			//Configuration1 Register Address
-	conf[1] = (uint8_t)( (FORCE_CAL << 7) | (PARITY_EN << 6) | (TRIGG_EDGE << 5) | (STOP_EDGE << 4)
-			| (START_EDGE << 3)| (MEAS_MODE << 1) | (START_MEAS) );
-
 
 	//Transmit
-	HAL_GPIO_WritePin(GPIOB, SPI2_CS1_TDC_PB06_Pin, GPIO_PIN_RESET);
-	HAL_SPI_Transmit(hspi, conf, 2, HAL_MAX_DELAY);
-	HAL_GPIO_WritePin(GPIOB, SPI2_CS1_TDC_PB06_Pin, GPIO_PIN_SET);
+	TDC_Write_Data(TDC_CONF1_REG, conf1_Data);
 
 
 	//Receive
-	RW = 0x0;
+	uint8_t RW = 0x0;
+	uint8_t Auto_Inc = 0x0;
 	wrt_pnt[0] = (uint8_t)( (Auto_Inc << 7) | (RW << 6 ) | (TDC_CONF1_REG) );
 	wrt_pnt[1] = 0x00;		//dummy
 
@@ -270,7 +254,7 @@ void TDC_Read_Data(uint8_t addr, uint8_t rx[3])
 	GPIOB->BSRR = SPI2_CS2_TDC_PB07_Pin << 16U;
 
 	#if 1
-		SPI2->DR = val;
+		SPI2->DR = val;		// Transmit Register Address
 		while ((SPI2->SR & SPI_FLAG_TXE) == (uint16_t)RESET) { ; }
 		while ((SPI2->SR & SPI_FLAG_RXNE) == (uint16_t)RESET){ ; }
 		SPI2->DR;	// dummy Rx value
@@ -279,8 +263,9 @@ void TDC_Read_Data(uint8_t addr, uint8_t rx[3])
 		SPI2->DR = 0x0000;	// Transmit Dummy value
 		while ((SPI2->SR & SPI_FLAG_TXE) == (uint16_t)RESET){ ; }
 		while ((SPI2->SR & SPI_FLAG_RXNE) == (uint16_t)RESET){ ; }
-		Rx[0] = SPI2->DR;
+		rx[0] = SPI2->DR;
 
+	#endif
 	GPIOB->BSRR = SPI2_CS1_TDC_PB06_Pin;		// CS Set
 	GPIOB->BSRR = SPI2_CS2_TDC_PB07_Pin;
 
@@ -291,18 +276,19 @@ void TDC_Read_Data(uint8_t addr, uint8_t rx[3])
 		SPI2->DR = 0x0000;
 		while ((SPI2->SR & SPI_FLAG_TXE) == (uint16_t)RESET){ ; }
 		while ((SPI2->SR & SPI_FLAG_RXNE) == (uint16_t)RESET){ ; }
-		Rx[1] = SPI2->DR;
+		rx[1] = SPI2->DR;
 
 
 		SPI2->DR = 0x0000;	// Transmit Dummy value
 		while ((SPI2->SR & SPI_FLAG_TXE) == (uint16_t)RESET){ ; }
 		while ((SPI2->SR & SPI_FLAG_RXNE) == (uint16_t)RESET){ ; }
-		Rx[2] = SPI2->DR;
+		rx[2] = SPI2->DR;
+
+	#endif
 
 	GPIOB->BSRR = SPI2_CS1_TDC_PB06_Pin;
 	GPIOB->BSRR = SPI2_CS2_TDC_PB07_Pin;
 
-	#endif
 }
 
 //uint16_t TDC_Dst_Calc(SPI_HandleTypeDef *hspi) {
