@@ -244,14 +244,8 @@ void TDC_Write_Data(uint8_t addr, uint8_t data)
 	GPIOB->BSRR = SPI2_CS2_TDC_PB07_Pin << 16U;
 #if 1
     SPI2->DR = val;
-	while ((SPI2->SR & SPI_FLAG_TXE) == (uint16_t)RESET)
-	{
-		;
-	}
-	while ((SPI2->SR & SPI_FLAG_RXNE) == (uint16_t)RESET)
-	{
-		;
-	}
+	while ((SPI2->SR & SPI_FLAG_TXE) == (uint16_t)RESET) { ; }
+	while ((SPI2->SR & SPI_FLAG_RXNE) == (uint16_t)RESET){ ; }
 	SPI2->DR;
 
 #else
@@ -265,9 +259,50 @@ void TDC_Write_Data(uint8_t addr, uint8_t data)
 	GPIOB->BSRR = SPI2_CS2_TDC_PB07_Pin;
 }
 
-void TDCWriteData(uint8_t addr, uint8_t data)
+void TDC_Read_Data(uint8_t addr, uint8_t rx[3])
 {
+	uint16_t val = addr;
+	val |= 0x00U;
+	val <<= 8;
 
+
+	GPIOB->BSRR = SPI2_CS1_TDC_PB06_Pin << 16U; 	// CS Reset
+	GPIOB->BSRR = SPI2_CS2_TDC_PB07_Pin << 16U;
+
+	#if 1
+		SPI2->DR = val;
+		while ((SPI2->SR & SPI_FLAG_TXE) == (uint16_t)RESET) { ; }
+		while ((SPI2->SR & SPI_FLAG_RXNE) == (uint16_t)RESET){ ; }
+		SPI2->DR;	// dummy Rx value
+
+
+		SPI2->DR = 0x0000;	// Transmit Dummy value
+		while ((SPI2->SR & SPI_FLAG_TXE) == (uint16_t)RESET){ ; }
+		while ((SPI2->SR & SPI_FLAG_RXNE) == (uint16_t)RESET){ ; }
+		Rx[0] = SPI2->DR;
+
+	GPIOB->BSRR = SPI2_CS1_TDC_PB06_Pin;		// CS Set
+	GPIOB->BSRR = SPI2_CS2_TDC_PB07_Pin;
+
+	GPIOB->BSRR = SPI2_CS1_TDC_PB06_Pin << 16U;
+	GPIOB->BSRR = SPI2_CS2_TDC_PB07_Pin << 16U;
+
+	#if 1
+		SPI2->DR = 0x0000;
+		while ((SPI2->SR & SPI_FLAG_TXE) == (uint16_t)RESET){ ; }
+		while ((SPI2->SR & SPI_FLAG_RXNE) == (uint16_t)RESET){ ; }
+		Rx[1] = SPI2->DR;
+
+
+		SPI2->DR = 0x0000;	// Transmit Dummy value
+		while ((SPI2->SR & SPI_FLAG_TXE) == (uint16_t)RESET){ ; }
+		while ((SPI2->SR & SPI_FLAG_RXNE) == (uint16_t)RESET){ ; }
+		Rx[2] = SPI2->DR;
+
+	GPIOB->BSRR = SPI2_CS1_TDC_PB06_Pin;
+	GPIOB->BSRR = SPI2_CS2_TDC_PB07_Pin;
+
+	#endif
 }
 
 //uint16_t TDC_Dst_Calc(SPI_HandleTypeDef *hspi) {
