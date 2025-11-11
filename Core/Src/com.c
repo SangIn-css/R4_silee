@@ -41,18 +41,14 @@ void Com_DoCommand(const char *line)
 
 
     //LDON (Turn on LD)
-
     if (strstr(line, "LDON")) {
         LD_Start();
     }
 
 
     //RTMP (Read Temperature)
-
     else if (strstr(line, "RTMP")) {
-
     	Tmp117_Init(t_hi2c);
-
     	while(cnt < 10) {
 			Tmp117_Read(t_hi2c);
     	}
@@ -61,9 +57,8 @@ void Com_DoCommand(const char *line)
 
     //RDIS (Read Distance)
     else if (strstr(line, "RDIS")) {
-    	TDC_Init(t_hspi);
+    	TDC_Read_Time1(t_hspi);
     	LD_Start();
-
     }
 
     HAL_UART_Transmit(c_huart, (uint8_t*)start_txt, sizeof(start_txt) - 1, HAL_MAX_DELAY);

@@ -117,7 +117,8 @@ int main(void)
   /* USER CODE BEGIN 2 */
   HAL_UART_Receive_IT(&huart1, &rx_ch, 1);		// use for UART (TeraTerm)
   __HAL_SPI_ENABLE(&hspi2);
-//  TDC_Init(&hspi2);
+  HAL_GPIO_WritePin(GPIOB,IND_GRN_LED_PB09_Pin,GPIO_PIN_SET);
+  TDC_Init(&hspi2);
   Com_Init(&huart1, &hi2c2, &hspi2);
 
   /* USER CODE END 2 */
@@ -194,7 +195,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 
 	if (htim->Instance == htim2.Instance) {
 		LD_ON();
-		HAL_GPIO_WritePin(GPIOB,IND_GRN_LED_PB09_Pin,GPIO_PIN_SET);
+		HAL_GPIO_WritePin(GPIOB,IND_BLU_LED_PB05_Pin,GPIO_PIN_SET);
 	}
 }
 

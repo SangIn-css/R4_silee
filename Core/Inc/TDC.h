@@ -32,6 +32,8 @@ void TDC_Read_Time2(SPI_HandleTypeDef *hspi);
 void TDC_Read_Cal1(SPI_HandleTypeDef *hspi);
 void TDC_Read_Cal2(SPI_HandleTypeDef *hspi);
 void TDC_Write_Data(uint8_t addr, uint8_t data);
+uint8_t TDC_Read_8(uint8_t addr, uint8_t TDC_num);
+uint32_t TDC_Read_24(uint8_t addr, uint8_t TDC_num);
 //uint16_t TDC_Dst_Calc(SPI_HandleTypeDef *hspi);
 
 
@@ -64,7 +66,7 @@ extern TIM_HandleTypeDef htim2;
 extern TIM_HandleTypeDef htim4;
 extern TIM_HandleTypeDef htim8;
 
-/**
+//
 	@brief    TDC Default Initialize
 	@details 	TDC를 사용하기 위한 초기화 과정을 수행하고 해당 값이 정상적으로 설정되었는지 확인.
 	@author   tg.An
@@ -73,7 +75,7 @@ extern TIM_HandleTypeDef htim8;
 	@return   None
 	@throw		일정 횟수이상 tdc 초기화를 못하는 경우 error 동작을 수행
 	@remark
-*/
+//
 
 /**
 void TDCInit(void)
@@ -213,7 +215,7 @@ void TDCInit(void)
 }
 
 #if 0
-/**
+//
 	@brief    TDC Calibration
 	@details 	factory 모드에서 접근하며, tdc calibration 값과 tdc core1 값을 계산해서 고정값으로 가지기 위함. \n
 						tdc calibration 기능을 수행하면서 거리 offset도 함께 구함.
@@ -227,7 +229,7 @@ void TDCInit(void)
 						2. 만약 거리 offset이 일정 범위이상 벗어나는 경우 bias 컨트롤이 정상적이지 않다고 판단할 수 있으며, \n
 						error 처리를 하는 부분을 구현해야 할 것으로 보임. hw 쪽에서 delay가 발생되는 것을 계산해서 범위를 지정해야 할 것으로 보임
 	@remark   2021.01.12 : motor speed 제어하는 기능 및 온도보상 추가.
-*/
+//
 //uint8_t slit_num = 0;
 //void TDCCalibration(void)
 //{

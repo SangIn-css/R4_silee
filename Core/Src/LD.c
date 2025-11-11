@@ -14,7 +14,7 @@ void LD_Start(void)
 void LD_ON(void)
 {
 	//Start New Measurement
-	TDC_Write_Data(TDC_CONF1_REG, 0x01U);
+//	TDC_Write_Data(TDC_CONF1_REG, 0x01U);
 
 	//Start1,2 Signal
 	HAL_GPIO_WritePin(GPIOB,REF_SIG_PB08_Pin,GPIO_PIN_SET);
