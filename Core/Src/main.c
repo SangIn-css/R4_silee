@@ -31,6 +31,7 @@
 #include "tmp117.h"
 #include "TDC.h"
 #include "LD.h"
+#include <stdio.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -195,7 +196,6 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 
 	if (htim->Instance == htim2.Instance) {
 		LD_ON();
-		HAL_GPIO_WritePin(GPIOB,IND_BLU_LED_PB05_Pin,GPIO_PIN_SET);
 	}
 }
 
@@ -209,6 +209,29 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
   }
 
 }
+
+
+static void _delay_tick(uint32_t uiCount); /*fixed for MISRA rule 8.1*/
+
+static void _delay_tick(uint32_t uiCount)
+{
+	__asm("    subs    r0, #1\n"
+				"    bne.n   _delay_tick\n"
+				"    bx      lr");
+}
+
+
+void DelayUs(uint32_t us)
+{
+	_delay_tick(us * (SystemCoreClock / 3U / 1000000U)); /*fixed for MISRA rule 10.1*/
+}
+
+
+void DelayMs(uint32_t ms)
+{rid
+	DelayUs(ms * 1000U); /*fixed for MISRA rule 10.1*/
+}
+
 /* USER CODE END 4 */
 
 /**

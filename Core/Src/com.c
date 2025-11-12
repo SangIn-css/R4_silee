@@ -57,10 +57,13 @@ void Com_DoCommand(const char *line)
 
     //RDIS (Read Distance)
     else if (strstr(line, "RDIS")) {
-    	TDC_Read_Time1(t_hspi);
+
     	LD_Start();
     }
 
+    else {
+    	printf("Incorrect Command\n");
+    }
     HAL_UART_Transmit(c_huart, (uint8_t*)start_txt, sizeof(start_txt) - 1, HAL_MAX_DELAY);
 
 }

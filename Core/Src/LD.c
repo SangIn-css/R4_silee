@@ -14,7 +14,7 @@ void LD_Start(void)
 void LD_ON(void)
 {
 	//Start New Measurement
-//	TDC_Write_Data(TDC_CONF1_REG, 0x01U);
+	TDC_Write_Data(TDC_CONF1_REG, 0x01U);
 
 	//Start1,2 Signal
 	HAL_GPIO_WritePin(GPIOB,REF_SIG_PB08_Pin,GPIO_PIN_SET);
@@ -24,14 +24,14 @@ void LD_ON(void)
 	HAL_GPIO_WritePin(GPIOB, LD_TRIG_PB02_Pin, GPIO_PIN_SET);
 	HAL_GPIO_WritePin(GPIOB, LD_TRIG_PB02_Pin, GPIO_PIN_RESET);
 
-//	TDC_Read_Time1(&hspi2);
-//	TDC_Read_Time2(&hspi2);
-//	TDC_Read_Cal1(&hspi2);
-//	TDC_Read_Cal2(&hspi2);
-
+	printf("STOP1 = %06x  ", (unsigned int)TDC_Read_24(TDC_TIME1_REG, 1));
+	printf("STOP2 = %06x  ", (unsigned int)TDC_Read_24(TDC_TIME1_REG, 2));
+	printf("CALI1 = %06x  ", (unsigned int)TDC_Read_24(TDC_CAL1_REG, 1));
+	printf("CALI2 = %06x\n", (unsigned int)TDC_Read_24(TDC_CAL2_REG, 1));
 }
 
 
+//
 //static void _delay_tick(uint32_t uiCount); /*fixed for MISRA rule 8.1*/
 //
 //static void _delay_tick(uint32_t uiCount)
@@ -49,6 +49,6 @@ void LD_ON(void)
 //
 //
 //void DelayMs(uint32_t ms)
-//{
+//{rid
 //	DelayUs(ms * 1000U); /*fixed for MISRA rule 10.1*/
 //}

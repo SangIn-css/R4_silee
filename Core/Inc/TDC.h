@@ -20,21 +20,12 @@ extern "C" {
 #define TDC_CAL1_REG		0x1B
 #define TDC_CAL2_REG		0x1C
 
-#define clk_Period 		16 * (10^6)
-#define C						3 * (10^8)
-
 void TDC_Init(SPI_HandleTypeDef *hspi);
 void TDC_Conf1_Init(SPI_HandleTypeDef *hspi);
 void TDC_Conf2_Init(SPI_HandleTypeDef *hspi);
-void TDC_Do_Read(SPI_HandleTypeDef *hspi);
-void TDC_Read_Time1(SPI_HandleTypeDef *hspi);
-void TDC_Read_Time2(SPI_HandleTypeDef *hspi);
-void TDC_Read_Cal1(SPI_HandleTypeDef *hspi);
-void TDC_Read_Cal2(SPI_HandleTypeDef *hspi);
 void TDC_Write_Data(uint8_t addr, uint8_t data);
 uint8_t TDC_Read_8(uint8_t addr, uint8_t TDC_num);
 uint32_t TDC_Read_24(uint8_t addr, uint8_t TDC_num);
-//uint16_t TDC_Dst_Calc(SPI_HandleTypeDef *hspi);
 
 
 #ifdef __cplusplus
@@ -77,7 +68,7 @@ extern TIM_HandleTypeDef htim8;
 	@remark
 //
 
-/**
+
 void TDCInit(void)
 {
 	bool result = false;
@@ -276,7 +267,7 @@ void TDCInit(void)
 //      g_TDC2.m_Time = TDCReadData24bit(TDC_CORE2, ADDR_TDC_TIME1);
 //
 //      if((g_TDC1.m_Calibration1 != 0U) && (g_TDC1.m_Calibration2 != 0U)
-//			&& (g_TDC2.m_Calibration1 != 0U) && (g_TDC2.m_Calibration2 != 0U)) { /*fixed for MISRA rule 12.4*/
+//			&& (g_TDC2.m_Calibration1 != 0U) && (g_TDC2.m_Calibration2 != 0U)) { fixed for MISRA rule 12.4
 //				tdc1_calibration1 += g_TDC1.m_Calibration1;
 //				tdc1_calibration2 += g_TDC1.m_Calibration2;
 //				tdc2_calibration1 += g_TDC2.m_Calibration1;
@@ -301,7 +292,7 @@ void TDCInit(void)
 //					tof3 = tof2 - g_TDC1.m_TOF1;
 //
 //					// Distance Offset Range Error Check가 필요하다. 만약 어느정도 범위안에 안들어오면 에러처리를 해야함. 보통 -2.0 정도 나옴
-//          g_DistanceOffset = (float)(TDC_SETTING_DISTANCE - ((float)LIGHT_SPEED  * tof3 / 2.0)); /*fixed for MISRA rule 10.2*/
+//          g_DistanceOffset = (float)(TDC_SETTING_DISTANCE - ((float)LIGHT_SPEED  * tof3 / 2.0)); fixed for MISRA rule 10.2
 //
 //					//TIM_ITConfig(TIM1, TIM_IT_CC1, DISABLE);
 //                    __HAL_TIM_DISABLE_IT(&htim1, TIM_IT_CC1);
