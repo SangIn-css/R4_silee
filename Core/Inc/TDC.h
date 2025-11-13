@@ -12,10 +12,6 @@ extern "C" {
 
 #define TDC_TIME1_REG 	0x10
 #define TDC_TIME2_REG	    0x12
-#define TDC_TIME3_REG		0x14
-#define TDC_TIME4_REG		0x16
-#define TDC_TIME5_REG		0x18
-#define TDC_TIME6_REG		0x1A
 
 #define TDC_CAL1_REG		0x1B
 #define TDC_CAL2_REG		0x1C

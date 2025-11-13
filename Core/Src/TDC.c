@@ -36,7 +36,7 @@ void TDC_Conf1_Init(SPI_HandleTypeDef *hspi) {
 
 void TDC_Conf2_Init(SPI_HandleTypeDef *hspi) {
 
-	uint8_t conf = 0xB1;
+	uint8_t conf = 0xF8;
 
 	//Transmit
 	TDC_Write_Data(TDC_CONF2_REG, conf);

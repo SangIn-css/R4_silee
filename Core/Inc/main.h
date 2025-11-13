@@ -147,7 +147,8 @@ void Error_Handler(void);
 #define IND_GRN_LED_PB09_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
-
+void DelayUs(uint32_t us);
+void DelayMs(uint32_t ms);
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus
