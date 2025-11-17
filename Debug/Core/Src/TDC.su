@@ -1,6 +1,6 @@
 ../Core/Src/TDC.c:10:6:TDC_Init	16	static
-../Core/Src/TDC.c:21:6:TDC_Conf1_Init	24	static
-../Core/Src/TDC.c:37:6:TDC_Conf2_Init	24	static
-../Core/Src/TDC.c:54:6:TDC_Write_Data	24	static
-../Core/Src/TDC.c:81:9:TDC_Read_8	24	static
-../Core/Src/TDC.c:117:10:TDC_Read_24	32	static
+../Core/Src/TDC.c:20:6:TDC_Conf1_Init	24	static
+../Core/Src/TDC.c:36:6:TDC_Conf2_Init	24	static
+../Core/Src/TDC.c:53:6:TDC_Write_Data	24	static
+../Core/Src/TDC.c:80:9:TDC_Read_8	24	static
+../Core/Src/TDC.c:116:10:TDC_Read_24	32	static

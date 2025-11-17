@@ -13,7 +13,6 @@ void LD_Start(void)
 
 void LD_ON(void)
 {
-	unsigned int status;
 
 	//Start New Measurement
 	TDC_Write_Data(TDC_CONF1_REG, 0x01U);
@@ -26,9 +25,9 @@ void LD_ON(void)
 	HAL_GPIO_WritePin(GPIOB, LD_TRIG_PB02_Pin, GPIO_PIN_SET);
 	HAL_GPIO_WritePin(GPIOB, LD_TRIG_PB02_Pin, GPIO_PIN_RESET);
 
-	printf("STOP1 = %06x  ", (unsigned int)TDC_Read_24(TDC_TIME1_REG, 1));
-	printf("STOP2 = %06x  ", (unsigned int)TDC_Read_24(TDC_TIME1_REG, 2));
-	printf("CALI1 = %06x  ", (unsigned int)TDC_Read_24(TDC_CAL1_REG, 1));
-	printf("CALI2 = %06x\n", (unsigned int)TDC_Read_24(TDC_CAL2_REG, 2));
+	printf("Read Distance\n");
+	float norm_LSB = 62.5 / (((unsigned int)TDC_Read_24(TDC_CAL2_REG, 2) - (unsigned int)TDC_Read_24(TDC_CAL1_REG, 1)) / (40.0 - 1.0));
+	float ToF = ((unsigned int)TDC_Read_24(TDC_TIME1_REG, 2) - (unsigned int)TDC_Read_24(TDC_TIME1_REG, 1)) * norm_LSB;
+	printf("DIS = %f m\n\n", ToF * 0.15);
 }
 

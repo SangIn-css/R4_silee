@@ -12,8 +12,7 @@ void TDC_Init(SPI_HandleTypeDef *hspi)
 
 	TDC_Conf1_Init(hspi);
 	TDC_Conf2_Init(hspi);
-	printf("\n\n\nConfiguration1 = %04x\n", TDC_CR1);
-	printf("Configuration2 = %04x\n", TDC_CR2);
+	printf("\n\n\nConfiguration = %04x\n", TDC_CR1);
 
 }
 

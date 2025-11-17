@@ -1,2 +1,2 @@
 ../Core/Src/LD.c:8:6:LD_Start	8	static
-../Core/Src/LD.c:14:6:LD_ON	8	static
+../Core/Src/LD.c:14:6:LD_ON	24	static
