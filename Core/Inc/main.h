@@ -105,6 +105,8 @@ void Error_Handler(void);
 #define ENET_RSTn_GPIO_Port GPIOB
 #define ENET_INTn_Pin GPIO_PIN_15
 #define ENET_INTn_GPIO_Port GPIOB
+#define TIM3_CH1_PWM_BLDC_PC06_Pin GPIO_PIN_6
+#define TIM3_CH1_PWM_BLDC_PC06_GPIO_Port GPIOC
 #define GUIDE_LD_PC07_Pin GPIO_PIN_7
 #define GUIDE_LD_PC07_GPIO_Port GPIOC
 #define ERR_PULSE_Pin GPIO_PIN_8

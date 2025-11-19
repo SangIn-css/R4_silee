@@ -120,7 +120,6 @@ int main(void)
   HAL_GPIO_WritePin(GPIOB,IND_GRN_LED_PB09_Pin,GPIO_PIN_SET);
   TDC_Init(&hspi2);
   Com_Init(&huart1);
-  HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -195,13 +194,6 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 
 	if (htim->Instance == htim2.Instance) {
 		LD_ON();
-	}
-	else if (htim->Instance == htim3.Instance) {
-//		HAL_GPIO_WritePin(GPIOC, TIM3_CH1_PWM_BLDC_PC06_Pin, GPIO_PIN_SET);
-//		for(int i = 0; i < 1000; i++) {
-//			asm("nop");
-//		}
-//		HAL_GPIO_WritePin(GPIOC, TIM3_CH1_PWM_BLDC_PC06_Pin, GPIO_PIN_RESET);
 	}
 }
 
