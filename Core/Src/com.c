@@ -54,6 +54,8 @@ void Com_DoCommand(const char *line)
     else if (strstr(line, "DRMT")) {
     	printf("COM\n");
     	HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
+    	HAL_Delay(500);
+//    	HAL_GPIO_WritePin(GPIOC, FEEDBACK_SWITCH_PC14_Pin, GPIO_PIN_SET);
 //    	HAL_TIM_Base_Start_IT(&htim3);
     }
 
