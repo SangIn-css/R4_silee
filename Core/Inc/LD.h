@@ -7,9 +7,7 @@ extern "C" {
 
 #include "stm32f4xx_hal.h"
 
-void LD_Start(void);
 void LD_ON(void);
-
 
 #ifdef __cplusplus
 }

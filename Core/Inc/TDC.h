@@ -16,9 +16,9 @@ extern "C" {
 #define TDC_CAL1_REG		0x1B
 #define TDC_CAL2_REG		0x1C
 
-void TDC_Init(SPI_HandleTypeDef *hspi);
-void TDC_Conf1_Init(SPI_HandleTypeDef *hspi);
-void TDC_Conf2_Init(SPI_HandleTypeDef *hspi);
+void TDC_Init();
+void TDC_Conf1_Init();
+void TDC_Conf2_Init();
 void TDC_Write_Data(uint8_t addr, uint8_t data);
 uint8_t TDC_Read_8(uint8_t addr, uint8_t TDC_num);
 uint32_t TDC_Read_24(uint8_t addr, uint8_t TDC_num);

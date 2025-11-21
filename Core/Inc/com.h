@@ -7,7 +7,7 @@ extern "C" {
 
 #include "stm32f4xx_hal.h"
 
-void Com_Init(UART_HandleTypeDef *huart);
+void Com_Init();
 void Com_DoCommand(const char *line);
 void Com_OnRxChar(uint8_t ch);
 

@@ -5,6 +5,7 @@
 #include "tmp117.h"
 #include "LD.h"
 #include "TDC.h"
+#include "usart.h"
 #include "stm32f4xx_hal.h"
 #include <string.h>
 #include <stdio.h>
@@ -23,13 +24,12 @@ static const uint8_t start_txt[] =
 " 1) RTMP : Read Temperature\n"
 " 2) RDIS : Read Distance\n"
 " 3) DRMT : Drive Motor\n"
+" 4) RENC : Read Encoder\n"
 " >> ";
 
-void Com_Init(UART_HandleTypeDef *huart)
+void Com_Init()
 {
-    c_huart = huart;
-
-    HAL_UART_Transmit(c_huart, (uint8_t*)start_txt, sizeof(start_txt) - 1, HAL_MAX_DELAY);
+    HAL_UART_Transmit(&huart1, (uint8_t*)start_txt, sizeof(start_txt) - 1, HAL_MAX_DELAY);
 }
 
 
@@ -47,19 +47,19 @@ void Com_DoCommand(const char *line)
 
     //RDIS (Read Distance)
     else if (strstr(line, "RDIS")) {
-    	LD_Start();
+    	HAL_TIM_Base_Start_IT(&htim2);
     }
 
     //DRMT (Drive Motor)
     else if (strstr(line, "DRMT")) {
-    	printf("COM\n");
+    	printf("Drive Motor\n");
     	HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
     	HAL_Delay(500);
     	HAL_GPIO_WritePin(GPIOC, FEEDBACK_SWITCH_PC14_Pin, GPIO_PIN_SET);
     }
 
     else if (strstr(line, "RENC")) {
-    	HAL_TIM_IC_Start(&htim1, TIM_CHANNEL_1);
+    	HAL_TIM_IC_Start_IT(&htim1, TIM_CHANNEL_1);
     }
     else {
     	printf("Incorrect Command\n");

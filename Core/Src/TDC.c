@@ -6,17 +6,16 @@
 
 uint16_t TDC_CR1;		//Configuration Register
 uint16_t TDC_CR2;
+float CALI2_PERIODS = 1.0;
 
-void TDC_Init(SPI_HandleTypeDef *hspi)
+void TDC_Init()
 {
-
-	TDC_Conf1_Init(hspi);
-	TDC_Conf2_Init(hspi);
-
+	TDC_Conf1_Init();
+	TDC_Conf2_Init();
 }
 
 
-void TDC_Conf1_Init(SPI_HandleTypeDef *hspi) {
+void TDC_Conf1_Init() {
 
 	uint8_t conf = 0x00;
 
@@ -32,7 +31,7 @@ void TDC_Conf1_Init(SPI_HandleTypeDef *hspi) {
 }
 
 
-void TDC_Conf2_Init(SPI_HandleTypeDef *hspi) {
+void TDC_Conf2_Init() {
 
 	uint8_t conf = 0xF8;
 
@@ -46,6 +45,18 @@ void TDC_Conf2_Init(SPI_HandleTypeDef *hspi) {
 	TDC_CR1 |= (uint16_t)conf1;
 	TDC_CR2 |= (uint16_t)conf2;
 
+	if(conf & 0xC0) {
+		CALI2_PERIODS = 40.0;
+	}
+	else if(conf & 0x80) {
+		CALI2_PERIODS = 20.0;
+	}
+	else if(conf & 0x40) {
+		CALI2_PERIODS = 10.0;
+	}
+	else {
+		CALI2_PERIODS = 2.0;
+	}
 }
 
 

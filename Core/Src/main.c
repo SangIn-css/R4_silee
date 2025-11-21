@@ -115,11 +115,11 @@ int main(void)
   MX_I2C2_Init();
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
-  HAL_UART_Receive_IT(&huart1, &rx_ch, 1);		// use for UART (TeraTerm)
-  __HAL_SPI_ENABLE(&hspi2);
   HAL_GPIO_WritePin(GPIOB,IND_GRN_LED_PB09_Pin,GPIO_PIN_SET);
-  TDC_Init(&hspi2);
-  Com_Init(&huart1);
+  HAL_UART_Receive_IT(&huart1, &rx_ch, 1);		// use for UART (TeraTerm)
+  Com_Init();
+  __HAL_SPI_ENABLE(&hspi2);
+  TDC_Init();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -194,6 +194,13 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 
 	if (htim->Instance == htim2.Instance) {
 		LD_ON();
+	}
+}
+
+void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim) {
+	if (htim->Instance == htim1.Instance) {
+		unsigned int IC_val = (unsigned int)HAL_TIM_ReadCapturedValue(htim, TIM_CHANNEL_1);
+		printf("enc = %d\n", IC_val);
 	}
 }
 

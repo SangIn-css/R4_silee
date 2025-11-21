@@ -34,7 +34,8 @@ Core/Src/com.o: ../Core/Src/com.c ../Core/Inc/main.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
  ../Core/Inc/tim.h ../Core/Inc/main.h ../Core/Inc/i2c.h ../Core/Inc/com.h \
- ../Core/Inc/tmp117.h ../Core/Inc/LD.h ../Core/Inc/TDC.h
+ ../Core/Inc/tmp117.h ../Core/Inc/LD.h ../Core/Inc/TDC.h \
+ ../Core/Inc/usart.h
 ../Core/Inc/main.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
 ../Core/Inc/stm32f4xx_hal_conf.h:
@@ -77,3 +78,4 @@ Core/Src/com.o: ../Core/Src/com.c ../Core/Inc/main.h \
 ../Core/Inc/tmp117.h:
 ../Core/Inc/LD.h:
 ../Core/Inc/TDC.h:
+../Core/Inc/usart.h:
