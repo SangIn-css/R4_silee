@@ -53,8 +53,8 @@ void LD_ON(void)
 		min = 1000.0;
 	}
 
-	if(LD_cnt == 50000) {
-		HAL_TIM_Base_Stop(&htim2);
+	if(LD_cnt == 10000) {
+		HAL_TIM_Base_Stop_IT(&htim2);
 		HAL_UART_Receive_IT(&huart1, &rx_ch, 1);
 		Com_Init();
 	}

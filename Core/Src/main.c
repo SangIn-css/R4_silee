@@ -198,21 +198,19 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 }
 
 void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim) {
+
 	if (htim->Instance == htim1.Instance) {
 		unsigned int IC_val = (unsigned int)HAL_TIM_ReadCapturedValue(htim, TIM_CHANNEL_1);
 		printf("enc = %d\n", IC_val);
 	}
 }
 
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
-{
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
 
- if (huart->Instance == USART1)
-  {
-	 Com_OnRxChar(rx_ch);
-     HAL_UART_Receive_IT(&huart1, &rx_ch, 1);
-  }
-
+	 if (huart->Instance == USART1) {
+		 Com_OnRxChar(rx_ch);
+		 HAL_UART_Receive_IT(&huart1, &rx_ch, 1);
+	}
 }
 
 static void _delay_tick(uint32_t uiCount)

@@ -13,9 +13,8 @@
 extern TIM_HandleTypeDef htim2;
 extern uint8_t cnt;
 
-#define RX_LINE_MAX 64
+#define RX_LINE_MAX 10
 
-static UART_HandleTypeDef *c_huart;
 static uint8_t  line[RX_LINE_MAX];
 static uint16_t idx = 0;
 
@@ -56,6 +55,7 @@ void Com_DoCommand(const char *line)
     	HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
     	HAL_Delay(500);
     	HAL_GPIO_WritePin(GPIOC, FEEDBACK_SWITCH_PC14_Pin, GPIO_PIN_SET);
+    	printf("Drive Motor\n");
     }
 
     else if (strstr(line, "RENC")) {
@@ -64,7 +64,8 @@ void Com_DoCommand(const char *line)
     else {
     	printf("Incorrect Command\n");
     }
-    HAL_UART_Transmit(c_huart, (uint8_t*)start_txt, sizeof(start_txt) - 1, HAL_MAX_DELAY);
+
+    HAL_UART_Transmit(&huart1, (uint8_t*)start_txt, sizeof(start_txt) - 1, HAL_MAX_DELAY);
 
 }
 
