@@ -55,7 +55,6 @@ void Com_DoCommand(const char *line)
     	HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
     	HAL_Delay(500);
     	HAL_GPIO_WritePin(GPIOC, FEEDBACK_SWITCH_PC14_Pin, GPIO_PIN_SET);
-    	printf("Drive Motor\n");
     }
 
     else if (strstr(line, "RENC")) {

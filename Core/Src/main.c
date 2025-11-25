@@ -31,6 +31,7 @@
 #include "tmp117.h"
 #include "TDC.h"
 #include "LD.h"
+#include "enc.h"
 #include <stdio.h>
 /* USER CODE END Includes */
 
@@ -199,9 +200,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 
 void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim) {
 
-	if (htim->Instance == htim1.Instance) {
-		unsigned int IC_val = (unsigned int)HAL_TIM_ReadCapturedValue(htim, TIM_CHANNEL_1);
-		printf("enc = %d\n", IC_val);
+	if (htim->Instance == TIM1 && htim->Channel == HAL_TIM_ACTIVE_CHANNEL_1) {
+		enc_read();
 	}
 }
 
