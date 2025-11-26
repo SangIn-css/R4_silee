@@ -59,8 +59,6 @@ extern UART_HandleTypeDef huart1;
 uint8_t rx_ch;
 uint8_t rx_line[64];
 volatile uint16_t rx_idx = 0;
-unsigned int g_diff = 0;
-unsigned int last_diff = 0;
 
 /* USER CODE END PV */
 
@@ -133,11 +131,7 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	  if(g_diff != last_diff) {
-		  last_diff = g_diff;
-//		  printf("diff = %d\n", g_diff);
-		  printf("rps=%.2f\n", 1000000.0f / (g_diff * 180.0f));
-	  }
+	  enc_calc();
   }
   /* USER CODE END 3 */
 }

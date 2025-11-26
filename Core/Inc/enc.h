@@ -6,6 +6,7 @@ extern "C" {
 #endif
 
 void enc_read();
+void enc_calc();
 
 #ifdef __cplusplus
 }

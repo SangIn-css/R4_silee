@@ -4,7 +4,9 @@
 #include <stdio.h>
 
 unsigned int prev_val = 0;
-extern unsigned int g_diff;
+unsigned int g_diff = 0;
+unsigned int last_diff = 0;
+float rps = 0;
 
 void enc_read() {
 
@@ -14,29 +16,23 @@ void enc_read() {
 	if(val < prev_val) {
 		diff += 65536;
 	}
-//	else {
-//		printf("Hz = %02f\n", 1000000.0f / (diff * 179.0f));
-//	}
-
-//	if(val < prev_val) {
-//		printf("diff = %d\n", diff + 65535);
-//	}
-//	else {
-//		printf("diff = %d\n", diff);
-//	}
-//	printf("rps=%.2f\n", 1000000.0f / (diff * 179.0f));
 
 	 prev_val = val;
 	 g_diff = diff;
-//	if(val < prev_val) {
-//		diff += 65535;
-//		printf("diff = %d\n", diff);
-//	}
-//	else
-//		printf("diff = %d\n", diff);
-//    prev_val = val;
-//    printf("diff = %d\n", diff);
-//    float rps = 1000000.0f / (diff * 179.0f);
-//    printf("rps=%.2f\n", rps);
 
+}
+
+void enc_calc() {
+	if(g_diff != last_diff) {
+		  last_diff = g_diff;
+		  rps = 1000000.0f / (g_diff * 180.0f);
+//		  printf("diff = %d\n", g_diff);
+		 if((rps > 14) && (rps < 16)){
+			  printf("rps = %.4f     diff = %.4f\n", rps, rps - 15);
+		}
+	}
+}
+
+void enc_speed() {
+	htim3.Instance->CCR1 = 1225;
 }
