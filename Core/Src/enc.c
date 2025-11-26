@@ -4,7 +4,6 @@
 #include <stdio.h>
 
 unsigned int prev_val = 0;
-
 extern unsigned int g_diff;
 
 void enc_read() {

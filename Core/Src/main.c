@@ -135,7 +135,8 @@ int main(void)
     /* USER CODE BEGIN 3 */
 	  if(g_diff != last_diff) {
 		  last_diff = g_diff;
-		  printf("diff = %d\n", g_diff);
+//		  printf("diff = %d\n", g_diff);
+		  printf("rps=%.2f\n", 1000000.0f / (g_diff * 180.0f));
 	  }
   }
   /* USER CODE END 3 */
