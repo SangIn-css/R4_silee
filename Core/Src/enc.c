@@ -4,9 +4,9 @@
 #include <stdio.h>
 
 unsigned int prev_val = 0;
-unsigned int g_diff = 0;
+unsigned int true_diff = 0;
 unsigned int last_diff = 0;
-float rps = 0;
+float rps = 15.0;
 
 void enc_read() {
 
@@ -18,21 +18,32 @@ void enc_read() {
 	}
 
 	 prev_val = val;
-	 g_diff = diff;
-
+	 true_diff = diff;
 }
 
 void enc_calc() {
-	if(g_diff != last_diff) {
-		  last_diff = g_diff;
-		  rps = 1000000.0f / (g_diff * 180.0f);
-//		  printf("diff = %d\n", g_diff);
-		 if((rps > 14) && (rps < 16)){
-			  printf("rps = %.4f     diff = %.4f\n", rps, rps - 15);
+	if(true_diff != last_diff) {
+		  last_diff = true_diff;
+		  rps = 1000000.0 / (true_diff * 180.0);
+//		  printf("enc_diff = %d\n", g_diff);
+		 if((rps > 12) && (rps < 18)){
+			  printf("Hz = %.4f\tdiff = %.4f\n", rps, rps - 15.0);
 		}
 	}
 }
 
 void enc_speed() {
-	htim3.Instance->CCR1 = 1225;
+
+	float diff = 0.0;
+	unsigned int k = 50;
+	unsigned int pulse = 1224;
+
+	if (rps > 15) {
+		diff = rps - 15;
+		htim3.Instance->CCR1 = pulse - (k * diff);
+	}
+	else if (rps < 15) {
+		diff = 15  - rps;
+		htim3.Instance->CCR1 = pulse + (k * diff);
+	}
 }

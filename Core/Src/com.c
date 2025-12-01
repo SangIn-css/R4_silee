@@ -60,6 +60,7 @@ void Com_DoCommand(const char *line)
     else if (strstr(line, "RENC")) {
     	HAL_TIM_IC_Start_IT(&htim1, TIM_CHANNEL_1);
     }
+
     else {
     	printf("Incorrect Command\n");
     }

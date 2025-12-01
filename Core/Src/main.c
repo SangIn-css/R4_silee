@@ -132,6 +132,7 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 	  enc_calc();
+	  enc_speed();
   }
   /* USER CODE END 3 */
 }

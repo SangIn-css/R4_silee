@@ -1,3 +1,3 @@
 ../Core/Src/com.c:29:6:Com_Init	8	static
 ../Core/Src/com.c:35:6:Com_DoCommand	16	static
-../Core/Src/com.c:72:6:Com_OnRxChar	16	static
+../Core/Src/com.c:73:6:Com_OnRxChar	16	static

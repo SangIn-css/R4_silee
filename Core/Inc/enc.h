@@ -1,5 +1,5 @@
-#ifndef __TDC_H__
-#define __TDC_H__
+#ifndef _ENC_H__
+#define __ENC_H__
 
 #ifdef __cplusplus
 extern "C" {
@@ -7,6 +7,7 @@ extern "C" {
 
 void enc_read();
 void enc_calc();
+void enc_speed();
 
 #ifdef __cplusplus
 }
