@@ -4,9 +4,10 @@
 #include <stdio.h>
 
 unsigned int prev_val = 0;
-unsigned int true_diff = 0;
+unsigned int current_diff = 0;
 unsigned int last_diff = 0;
 float rps = 15.0;
+float integ = 0.0;
 
 void enc_read() {
 
@@ -18,13 +19,13 @@ void enc_read() {
 	}
 
 	 prev_val = val;
-	 true_diff = diff;
+	 current_diff = diff;
 }
 
 void enc_calc() {
-	if(true_diff != last_diff) {
-		  last_diff = true_diff;
-		  rps = 1000000.0 / (true_diff * 180.0);
+	if(current_diff != last_diff) {
+		  last_diff = current_diff;
+		  rps = 1000000.0 / (current_diff * 180.0);
 //		  printf("enc_diff = %d\n", g_diff);
 		 if((rps > 12) && (rps < 18)){
 			  printf("Hz = %.4f\tdiff = %.4f\n", rps, rps - 15.0);
@@ -34,16 +35,22 @@ void enc_calc() {
 
 void enc_speed() {
 
-	float diff = 0.0;
-	unsigned int k = 50;
-	unsigned int pulse = 1224;
+	float Kp = 60.0;
+	float Ki = 1.0;
+	float Kd = 0.05;
+	float prev_diff = 0.0;
 
-	if (rps > 15) {
-		diff = rps - 15;
-		htim3.Instance->CCR1 = pulse - (k * diff);
-	}
-	else if (rps < 15) {
-		diff = 15  - rps;
-		htim3.Instance->CCR1 = pulse + (k * diff);
-	}
+    float pulse = 1225.0;
+    float ctrl_sig;
+    float diff = 15.0 - rps;
+    float deriv = (diff - prev_diff) / 0.001;
+    integ += diff * 0.001;
+    prev_diff = diff;
+
+    ctrl_sig = (Kp * diff) + (Ki * integ) + (Kd * deriv);
+
+	htim3.Instance->CCR1 = pulse + ctrl_sig * 0.001;
+	pulse = htim3.Instance->CCR1;
+
 }
+
