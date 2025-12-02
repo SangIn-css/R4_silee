@@ -52,7 +52,7 @@ void Com_DoCommand(const char *line)
     //DRMT (Drive Motor)
     else if (strstr(line, "DRMT")) {
     	printf("Drive Motor\n");
-    	HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
+    	HAL_TIM_PWM_Start(&htim8, TIM_CHANNEL_1);
     	HAL_Delay(500);
     	HAL_GPIO_WritePin(GPIOC, FEEDBACK_SWITCH_PC14_Pin, GPIO_PIN_SET);
     }

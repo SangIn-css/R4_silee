@@ -113,9 +113,9 @@ int main(void)
   MX_TIM1_Init();
   MX_SPI2_Init();
   MX_SPI3_Init();
-  MX_TIM3_Init();
   MX_I2C2_Init();
   MX_TIM2_Init();
+  MX_TIM8_Init();
   /* USER CODE BEGIN 2 */
   HAL_GPIO_WritePin(GPIOB,IND_GRN_LED_PB09_Pin,GPIO_PIN_SET);
   HAL_UART_Receive_IT(&huart1, &rx_ch, 1);		// use for UART (TeraTerm)

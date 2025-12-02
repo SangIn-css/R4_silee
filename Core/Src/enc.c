@@ -27,20 +27,20 @@ void enc_calc() {
 		  last_diff = current_diff;
 		  rps = 1000000.0 / (current_diff * 180.0);
 //		  printf("enc_diff = %d\n", g_diff);
-		 if((rps > 12) && (rps < 18)){
-			  printf("Hz = %.4f\tdiff = %.4f\n", rps, rps - 15.0);
+		 if((rps > 14) && (rps < 16)) {
+			  printf("Hz = %.3f\tdiff = %.3f\n", rps, rps - 15.0);
 		}
 	}
 }
 
 void enc_speed() {
 
-	float Kp = 200.0;
-	float Ki = 100.0;
-	float Kd = 100.00;
+	float Kp = 30.0;
+	float Ki = 4.0;
+	float Kd = 170.00;
 	float prev_diff = 0.0;
 
-    float pulse = 1225.0;
+    float pulse = 2445.0;
     float ctrl_sig;
     float diff = 15.0 - rps;
     float deriv = (diff - prev_diff) / 0.01;
@@ -49,8 +49,8 @@ void enc_speed() {
 
     ctrl_sig = (Kp * diff) + (Ki * integ) + (Kd * deriv);
 
-	htim3.Instance->CCR1 = pulse + ctrl_sig * 0.01;
-	pulse = htim3.Instance->CCR1;
+	htim8.Instance->CCR1 = pulse + ctrl_sig * 0.01;
+	pulse = htim8.Instance->CCR1;
 
 }
 
