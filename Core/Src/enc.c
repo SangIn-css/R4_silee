@@ -35,21 +35,21 @@ void enc_calc() {
 
 void enc_speed() {
 
-	float Kp = 60.0;
-	float Ki = 1.0;
-	float Kd = 0.05;
+	float Kp = 200.0;
+	float Ki = 100.0;
+	float Kd = 100.00;
 	float prev_diff = 0.0;
 
     float pulse = 1225.0;
     float ctrl_sig;
     float diff = 15.0 - rps;
-    float deriv = (diff - prev_diff) / 0.001;
-    integ += diff * 0.001;
+    float deriv = (diff - prev_diff) / 0.01;
+    integ += diff * 0.01;
     prev_diff = diff;
 
     ctrl_sig = (Kp * diff) + (Ki * integ) + (Kd * deriv);
 
-	htim3.Instance->CCR1 = pulse + ctrl_sig * 0.001;
+	htim3.Instance->CCR1 = pulse + ctrl_sig * 0.01;
 	pulse = htim3.Instance->CCR1;
 
 }

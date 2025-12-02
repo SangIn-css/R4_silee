@@ -57,6 +57,7 @@ void Com_DoCommand(const char *line)
     	HAL_GPIO_WritePin(GPIOC, FEEDBACK_SWITCH_PC14_Pin, GPIO_PIN_SET);
     }
 
+    //RENC (Read Encoder value)
     else if (strstr(line, "RENC")) {
     	HAL_TIM_IC_Start_IT(&htim1, TIM_CHANNEL_1);
     }
