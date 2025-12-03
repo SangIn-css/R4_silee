@@ -6,7 +6,12 @@
 unsigned int prev_val = 0;
 unsigned int  current_diff = 0;
 unsigned int val = 0;
-unsigned int last_diff = 0.0;
+unsigned int last_diff = 0;
+unsigned int slt_cnt = 0;
+unsigned int enc_cnt = 0;
+unsigned int start_val = 0;
+unsigned int end_val = 0;
+unsigned int start = 0;
 float rps = 15.0;
 float integ = 0.0;
 
@@ -17,6 +22,20 @@ void enc_read() {
 
 	if(val < prev_val) {
 		diff += 65536;
+		enc_cnt++;
+	}
+
+	if(diff > 700 && diff < 800) {
+
+		if(start == 0) {
+			start_val = val;
+			start = 1;
+		}
+
+		else {
+			end_val = val;
+			start = 0;
+		}
 	}
 
 	 prev_val = val;
@@ -25,12 +44,19 @@ void enc_read() {
 
 void enc_calc() {
 	if(current_diff != 0) {
-		  rps = 1000000.0 / (current_diff * 180.0);
-		  printf("val  = %d\t   enc_diff = %d\n", val, current_diff);
-//		 if((rps > 14) && (rps < 16)) {
-//			  printf("Hz = %.3f\tdiff = %.3f\n", rps, rps - 15.0);
+//		  	rps = 1000000.0 / (current_diff * 180.0);
+		unsigned int slt_cnt = end_val - start_val;
+		slt_cnt += 65536;
+
+		if(slt_cnt != 0) {
+			rps = 1000000.0 / slt_cnt;
 		}
-//	}
+
+		printf("slt_cnt = %d\t    rps  = %.3f\t    enc_diff = %d\n",slt_cnt,rps, current_diff);
+//		 	if((rps > 14) && (rps < 16)) {
+//			printf("Hz = %.3f\tdiff = %.3f\n", rps, rps - 15.0);
+//		}
+	}
 }
 
 void enc_speed() {
@@ -53,4 +79,3 @@ void enc_speed() {
 	pulse = htim8.Instance->CCR1;
 
 }
-
