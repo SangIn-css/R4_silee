@@ -3,15 +3,16 @@
 #include "tim.h"
 #include <stdio.h>
 
-float prev_val = 0.0;
-float  current_diff = 0.0;
-float last_diff = 0.0;
+unsigned int prev_val = 0;
+unsigned int  current_diff = 0;
+unsigned int val = 0;
+unsigned int last_diff = 0.0;
 float rps = 15.0;
 float integ = 0.0;
 
 void enc_read() {
 
-	unsigned int val = HAL_TIM_ReadCapturedValue(&htim1, TIM_CHANNEL_1);
+	val = HAL_TIM_ReadCapturedValue(&htim1, TIM_CHANNEL_1);
 	unsigned int diff =  val - prev_val;
 
 	if(val < prev_val) {
@@ -23,14 +24,13 @@ void enc_read() {
 }
 
 void enc_calc() {
-	if(current_diff != last_diff) {
-		  last_diff = current_diff;
+	if(current_diff != 0) {
 		  rps = 1000000.0 / (current_diff * 180.0);
-		  printf("enc_diff = %f\n", current_diff);
-		 if((rps > 14) && (rps < 16)) {
+		  printf("val  = %d\t   enc_diff = %d\n", val, current_diff);
+//		 if((rps > 14) && (rps < 16)) {
 //			  printf("Hz = %.3f\tdiff = %.3f\n", rps, rps - 15.0);
 		}
-	}
+//	}
 }
 
 void enc_speed() {
