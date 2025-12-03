@@ -3,9 +3,9 @@
 #include "tim.h"
 #include <stdio.h>
 
-unsigned int prev_val = 0;
-unsigned int current_diff = 0;
-unsigned int last_diff = 0;
+float prev_val = 0.0;
+float  current_diff = 0.0;
+float last_diff = 0.0;
 float rps = 15.0;
 float integ = 0.0;
 
@@ -26,9 +26,9 @@ void enc_calc() {
 	if(current_diff != last_diff) {
 		  last_diff = current_diff;
 		  rps = 1000000.0 / (current_diff * 180.0);
-//		  printf("enc_diff = %d\n", g_diff);
+		  printf("enc_diff = %f\n", current_diff);
 		 if((rps > 14) && (rps < 16)) {
-			  printf("Hz = %.3f\tdiff = %.3f\n", rps, rps - 15.0);
+//			  printf("Hz = %.3f\tdiff = %.3f\n", rps, rps - 15.0);
 		}
 	}
 }
