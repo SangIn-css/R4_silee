@@ -48,7 +48,6 @@ void enc_read() {
 
 void enc_calc() {
 	if(current_diff != 0) {
-//		  	rps = 1000000.0 / (current_diff * 180.0);
 		if(start == 0) {
 			slt_cnt = end_val - start_val;
 			slt_cnt += (end_enc_cnt - start_enc_cnt) * 65536;
@@ -58,11 +57,7 @@ void enc_calc() {
 			rps = 1000000.0 / slt_cnt;
 		}
 
-		printf("slt_cnt = %d     rps  = %.3f   current_diff = %d\n\n", slt_cnt, rps, current_diff);
-//		printf("current_diff = %d\n", current_diff);
-//		 	if((rps > 14) && (rps < 16)) {
-//			printf("Hz = %.3f\tdiff = %.3f\n", rps, rps - 15.0);
-//		}
+		printf("slt_cnt = %d   \t rps  = %.3f   \t dif = %.3f\n\n", slt_cnt, rps, rps - 15.0);
 	}
 }
 
@@ -73,7 +68,7 @@ void enc_speed() {
 	float Kd = 170.00;
 	float prev_diff = 0.0;
 
-    float pulse = 2445.0;
+    float pulse = 2460.0;
     float ctrl_sig;
     float diff = 15.0 - rps;
     float deriv = (diff - prev_diff) / 0.01;
