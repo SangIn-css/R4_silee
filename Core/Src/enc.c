@@ -7,8 +7,10 @@ unsigned int prev_val = 0;
 unsigned int  current_diff = 0;
 unsigned int val = 0;
 unsigned int last_diff = 0;
-unsigned int slt_cnt = 0;
+int slt_cnt = 0;
 unsigned int enc_cnt = 0;
+unsigned int start_enc_cnt = 0;
+unsigned int end_enc_cnt = 0;
 unsigned int start_val = 0;
 unsigned int end_val = 0;
 unsigned int start = 0;
@@ -30,11 +32,13 @@ void enc_read() {
 		if(start == 0) {
 			start_val = val;
 			start = 1;
+			start_enc_cnt = enc_cnt;
 		}
 
 		else {
 			end_val = val;
 			start = 0;
+			end_enc_cnt = enc_cnt;
 		}
 	}
 
@@ -45,14 +49,17 @@ void enc_read() {
 void enc_calc() {
 	if(current_diff != 0) {
 //		  	rps = 1000000.0 / (current_diff * 180.0);
-		unsigned int slt_cnt = end_val - start_val;
-		slt_cnt += 65536;
-
+		if(start == 0) {
+			slt_cnt = end_val - start_val;
+			slt_cnt += (end_enc_cnt - start_enc_cnt) * 65536;
+			enc_cnt = 0;
+		}
 		if(slt_cnt != 0) {
 			rps = 1000000.0 / slt_cnt;
 		}
 
-		printf("slt_cnt = %d\t    rps  = %.3f\t    enc_diff = %d\n",slt_cnt,rps, current_diff);
+		printf("slt_cnt = %d     rps  = %.3f   current_diff = %d\n\n", slt_cnt, rps, current_diff);
+//		printf("current_diff = %d\n", current_diff);
 //		 	if((rps > 14) && (rps < 16)) {
 //			printf("Hz = %.3f\tdiff = %.3f\n", rps, rps - 15.0);
 //		}
