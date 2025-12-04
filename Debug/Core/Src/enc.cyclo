@@ -1,3 +1,3 @@
-../Core/Src/enc.c:18:6:enc_read	5
-../Core/Src/enc.c:42:6:enc_calc	6
-../Core/Src/enc.c:58:6:enc_speed	1
+../Core/Src/enc.c:20:6:enc_read	5
+../Core/Src/enc.c:44:6:enc_calc	6
+../Core/Src/enc.c:61:6:enc_speed	3
