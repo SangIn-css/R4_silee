@@ -48,8 +48,9 @@ void enc_calc() {
 			enc_cnt = 0;
 		}
 
-		if( (slt_val > 60000) && (slt_val < 70000) ) {
+		if( (slt_val > 60000) && (slt_val < 70000) ) {	// except missing standard slit
 			rps = 1000000.0 / slt_val;
+			enc_speed();
 			printf("slt_val = %d   \t rps  = %.3f   \t diff = %.3f\n\n", slt_val, rps, rps - 15.0);
 		}
 
@@ -58,9 +59,6 @@ void enc_calc() {
 
 void enc_speed() {
 
-	float Kp = 100.0;
-	float Ki = 100.0;
-	float Kd = 500.00;
 	float prev_diff = 0.0;
 
     float pulse = 2455.0;
