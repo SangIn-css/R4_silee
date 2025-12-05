@@ -6,15 +6,13 @@ extern "C" {
 #endif
 
 
-//#define Kp = 100.0;
-#define Kp 250.0
-#define Ki 200.0
-#define Kd 800.0
-#define DT 0.01
+#define Kp 300.0
+#define Ki 550.0
+#define Kd 900.0
 
 void enc_read();
 void enc_calc();
-void enc_speed();
+void enc_speed(float DT);
 
 #ifdef __cplusplus
 }

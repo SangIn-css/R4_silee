@@ -44,7 +44,7 @@
 /* USER CODE BEGIN PD */
 extern I2C_HandleTypeDef hi2c2;
 extern UART_HandleTypeDef huart1;
-
+extern unsigned int read_done;
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -131,9 +131,7 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-
-	  enc_calc();
-//	  enc_speed();
+		  enc_calc();
   }
   /* USER CODE END 3 */
 }
