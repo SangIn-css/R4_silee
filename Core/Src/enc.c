@@ -3,15 +3,15 @@
 #include "tim.h"
 #include <stdio.h>
 
-uint16_t prev_val = 0;
-uint16_t val = 0;
-uint16_t start_val = 0;
-uint16_t end_val = 0;
-uint16_t read_done = 1;
-uint16_t slt_val = 0;
-uint32_t enc_cnt = 0;
-uint32_t start_enc_cnt = 0;
-uint32_t end_enc_cnt = 0;
+int prev_val = 0;
+int val = 0;
+int start_val = 0;
+int end_val = 0;
+int read_done = 1;
+int slt_val = 0;
+int enc_cnt = 0;
+int start_enc_cnt = 0;
+int end_enc_cnt = 0;
 float rps = 15.0;
 float integ = 0.0;
 float prev_diff = 0.0;
@@ -33,7 +33,6 @@ void enc_read() {
 			end_val = val;
 			read_done = 1;
 			end_enc_cnt = enc_cnt;
-			printf("f\n");
 		}
 	}
 
@@ -47,12 +46,11 @@ void enc_calc() {
 			start_val = end_val;
 			start_enc_cnt = end_enc_cnt;
 			read_done = 0;
-			printf("a\n");
 			if( (slt_val > 60000) && (slt_val < 70000) ) {	// except missing standard slit
 				rps = 1000000.0 / slt_val;
 				float dt = slt_val / 1000000.0;
-				enc_speed(dt);
 				printf("slt_val = %d   \t rps  = %.3f   \t diff = %.3f\n\n", slt_val, rps, rps - 15.0);
+				enc_speed(dt);
 			}
 		}
 	}
@@ -75,5 +73,4 @@ void enc_speed(float DT) {
 	htim8.Instance->CCR1 = pulse + ctrl_sig * DT;
 	pulse = htim8.Instance->CCR1;
 
-	printf("k\n");
 }
