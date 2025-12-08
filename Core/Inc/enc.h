@@ -6,8 +6,8 @@ extern "C" {
 #endif
 
 
-#define Kp 300.0
-#define Ki 550.0
+#define Kp 400.0
+#define Ki  700.0
 #define Kd 900.0
 
 void enc_read();

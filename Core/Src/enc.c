@@ -40,7 +40,7 @@ void enc_read() {
 }
 
 void enc_calc() {
-	if( (start_val != 0) && (end_val != 0) ) {		// after reading standard slits
+	if( (start_val != 0) && (end_val != 0) ) {		// after reading  first standard slits
 		if(read_done == 1) {
 			slt_val = (end_val - start_val) + (end_enc_cnt - start_enc_cnt) * 65536;
 			start_val = end_val;
@@ -49,7 +49,7 @@ void enc_calc() {
 			if( (slt_val > 60000) && (slt_val < 70000) ) {	// except missing standard slit
 				rps = 1000000.0 / slt_val;
 				float dt = slt_val / 1000000.0;
-				printf("slt_val = %d   \t rps  = %.3f   \t diff = %.3f\n\n", slt_val, rps, rps - 15.0);
+				printf("rps  = %.3f   \t diff = %.3f\n\n", rps, rps - 15.0);
 				enc_speed(dt);
 			}
 		}
