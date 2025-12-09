@@ -5,6 +5,7 @@
 uint16_t CR;		// value of Configuration Register
 uint16_t TR;		// value of Temperature Register
 uint8_t cnt = 0;
+float temp = 0.0;
 
 void Tmp117_Init(I2C_HandleTypeDef *hi2c){
 
@@ -43,7 +44,7 @@ void Tmp117_Read(I2C_HandleTypeDef *hi2c) {
 		printf("Conf Bit = %04x \n", CR);
 
 		TR = (uint16_t)((rx_buf[0] << 8) | rx_buf[1]);
-		float temp =  TR * 0.0078125f;		//convert 16Bit to decimal Temperature
+		temp =  TR * 0.0078125f;		//convert 16Bit to decimal Temperature
 
 		printf("Temperature = %.2f C\r\n", temp);
 		Tmp117_Read_Bit(hi2c);

@@ -1,7 +1,10 @@
 #include "main.h"
 #include "enc.h"
 #include "tim.h"
+#include "tmp117.h"
 #include <stdio.h>
+
+extern float temp;
 
 int prev_val = 0;
 int val = 0;
@@ -49,7 +52,12 @@ void enc_calc() {
 			if( (slt_val > 60000) && (slt_val < 70000) ) {	// except missing standard slit
 				rps = 1000000.0 / slt_val;
 				float dt = slt_val / 1000000.0;
-				printf("rps  = %.3f   \t diff = %.3f\n\n", rps, rps - 15.0);
+				if (rps < 15) {
+					printf("rps  = %.3f   \t diff = %.3f\n\n", rps, 15.0 - rps);
+				}
+				else {
+					printf("rps  = %.3f   \t diff = %.3f\n\n", rps, rps - 15.0);
+				}
 				enc_speed(dt);
 			}
 		}
@@ -60,17 +68,27 @@ void enc_speed(float DT) {
 
 	float prev_diff = 0.0;
 
-    float pulse = 2455.0;
+    float pulse = 2460.0;
     float diff = 15.0 - rps;
     float deriv = (diff - prev_diff) / DT;
     integ += diff * DT;
     prev_diff = diff;
 
+    float Kp  = 300.0;
+	float Ki  = 800.0;
+	float Kd = 1100.0;
+
+	if (temp < 30.0) {
+			Kp = 200.0;
+			Ki = 700.0;
+			Kd = 1700.0;
+	}
     float ctrl_sig = (Kp * diff) + (Ki * integ) + (Kd * deriv);
     if(ctrl_sig > 500.0 / DT) {
     	ctrl_sig = 500 * DT;
     }
 	htim8.Instance->CCR1 = pulse + ctrl_sig * DT;
 	pulse = htim8.Instance->CCR1;
+//	printf("%f\t %f\t %f\t", Kp, Ki, Kd);
 
 }
