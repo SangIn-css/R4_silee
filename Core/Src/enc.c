@@ -84,9 +84,9 @@ void enc_speed(float DT) {
 			Kd = 1700.0;
 	}
     float ctrl_sig = (Kp * diff) + (Ki * integ) + (Kd * deriv);
-    if(ctrl_sig > 500.0 / DT) {
-    	ctrl_sig = 500 * DT;
-    }
+//    if(ctrl_sig > 500.0 * DT) {
+//    	ctrl_sig = 500 * DT;
+//    }
 	htim8.Instance->CCR1 = pulse + ctrl_sig * DT;
 	pulse = htim8.Instance->CCR1;
 //	printf("%f\t %f\t %f\t", Kp, Ki, Kd);
