@@ -20,10 +20,11 @@ static uint16_t idx = 0;
 
 static const uint8_t start_txt[] =
 "\n Press Command\n"
-" 1) RTMP : Read Temperature\n"
-" 2) RDIS : Read Distance\n"
-" 3) DRMT : Drive Motor\n"
-" 4) RENC : Read Encoder\n"
+" 1) STOP : Stop All Command\n"
+" 2) RTMP : Read Temperature\n"
+" 3) RDIS : Read Distance\n"
+" 4) DRMT : Drive Motor\n"
+" 5) RENC : Read Encoder\n"
 " >> ";
 
 void Com_Init()
@@ -36,20 +37,27 @@ void Com_DoCommand(const char *line)
 {
     if (line[0] == '\0') return;
 
-    //RTMP (Read Temperature)
-    if (strstr(line, "RTMP")) {
+    //STOP
+    if (strstr(line, "STOP")) {
+    	htim8.Instance->CCR1 = 0;	//Stop motor
+    	NVIC_SystemReset();
+    	printf("stop\n");
+    }
+
+    //RTMP
+    else if (strstr(line, "RTMP")) {
     	Tmp117_Init(&hi2c2);
     	while(cnt < 10) {
 			Tmp117_Read(&hi2c2);
     	}
     }
 
-    //RDIS (Read Distance)
+    //RDIS
     else if (strstr(line, "RDIS")) {
     	HAL_TIM_Base_Start_IT(&htim2);
     }
 
-    //DRMT (Drive Motor)
+    //DRMT
     else if (strstr(line, "DRMT")) {
     	printf("Drive Motor\n");
     	HAL_TIM_PWM_Start(&htim8, TIM_CHANNEL_1);
@@ -57,7 +65,7 @@ void Com_DoCommand(const char *line)
     	HAL_GPIO_WritePin(GPIOC, FEEDBACK_SWITCH_PC14_Pin, GPIO_PIN_SET);
     }
 
-    //RENC (Read Encoder value)
+    //RENC
     else if (strstr(line, "RENC")) {
     	HAL_TIM_IC_Start_IT(&htim1, TIM_CHANNEL_1);
     }

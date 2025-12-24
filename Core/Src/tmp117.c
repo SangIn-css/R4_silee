@@ -25,7 +25,6 @@ void Tmp117_Init(I2C_HandleTypeDef *hi2c){
 	conf[2] = (uint16_t)( (CONV2 << 7) | (AVG << 5) | (TnA << 4) | (POL << 3) | (DRA << 2) | (SR << 1) );
 
 	HAL_Delay(50);
-	printf("Delayed\n");		//Delay for Preventing Hardware Error
 
 	HAL_I2C_Master_Transmit(hi2c,TMP117_ADDR, conf, 3, HAL_MAX_DELAY);
 
