@@ -4,7 +4,6 @@
 
 uint16_t CR;		// value of Configuration Register
 uint16_t TR;		// value of Temperature Register
-uint8_t cnt = 0;
 float temp = 0.0;
 
 void Tmp117_Init(I2C_HandleTypeDef *hi2c){
@@ -48,7 +47,6 @@ void Tmp117_Read(I2C_HandleTypeDef *hi2c) {
 		printf("Temperature = %.2f C\r\n", temp);
 		Tmp117_Read_Bit(hi2c);
 
-		cnt++;
 	}
 
 }
@@ -64,7 +62,7 @@ uint16_t isDataReady(I2C_HandleTypeDef *hi2c) {
 	uint8_t rx_buf[2];
 	uint8_t conf = 0x01;	// Configuration Register Address
 
-	HAL_I2C_Master_Transmit(hi2c,TMP117_ADDR, &conf, 1, HAL_MAX_DELAY);			//Register Pointer
+	HAL_I2C_Master_Transmit(hi2c, TMP117_ADDR, &conf, 1, HAL_MAX_DELAY);			//Register Pointer
 	HAL_I2C_Master_Receive(hi2c, TMP117_ADDR, rx_buf, 2, HAL_MAX_DELAY);
 
 	CR = (uint16_t)((rx_buf[0] << 8) | rx_buf[1]);
