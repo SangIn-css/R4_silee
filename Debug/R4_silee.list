@@ -2766,11 +2766,9 @@ void enc_speed(float DT) {
  80019ca:	693b      	ldr	r3, [r7, #16]
  80019cc:	61bb      	str	r3, [r7, #24]
 
-//  float Kp  = 300.0;
-    float Kp  = 300.0;
+    float Kp = 300.0;
  80019ce:	4b2a      	ldr	r3, [pc, #168]	@ (8001a78 <enc_speed+0x108>)
  80019d0:	627b      	str	r3, [r7, #36]	@ 0x24
-//	float Ki  = 800.0;
 	float Ki  = 800.0;
  80019d2:	4b2a      	ldr	r3, [pc, #168]	@ (8001a7c <enc_speed+0x10c>)
  80019d4:	623b      	str	r3, [r7, #32]
@@ -2787,7 +2785,7 @@ void enc_speed(float DT) {
  80019e8:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
  80019ec:	d505      	bpl.n	80019fa <enc_speed+0x8a>
 //			Kp = 200.0;
-			Kp = 100.0;
+			Kp = 150.0;
  80019ee:	4b25      	ldr	r3, [pc, #148]	@ (8001a84 <enc_speed+0x114>)
  80019f0:	627b      	str	r3, [r7, #36]	@ 0x24
 //			Ki = 700.0;
@@ -2848,7 +2846,7 @@ void enc_speed(float DT) {
  8001a78:	43960000 	.word	0x43960000
  8001a7c:	44480000 	.word	0x44480000
  8001a80:	20000510 	.word	0x20000510
- 8001a84:	42c80000 	.word	0x42c80000
+ 8001a84:	43160000 	.word	0x43160000
  8001a88:	43af0000 	.word	0x43af0000
  8001a8c:	442f0000 	.word	0x442f0000
  8001a90:	200004c0 	.word	0x200004c0

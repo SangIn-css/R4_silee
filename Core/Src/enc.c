@@ -74,16 +74,14 @@ void enc_speed(float DT) {
     integ += diff * DT;
     prev_diff = diff;
 
-//  float Kp  = 300.0;
-    float Kp  = 300.0;
-//	float Ki  = 800.0;
+    float Kp = 300.0;
 	float Ki  = 800.0;
 //	float Kd = 1100.0;
 	float Kd = 800.0;
 
 	if (temp < 30.0) {
 //			Kp = 200.0;
-			Kp = 100.0;
+			Kp = 150.0;
 //			Ki = 700.0;
 			Ki = 350.0;
 //			Kd = 1700.0;
