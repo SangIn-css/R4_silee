@@ -4,6 +4,7 @@
 
 uint16_t CR;		// value of Configuration Register
 uint16_t TR;		// value of Temperature Register
+uint8_t cnt  = 0;
 float temp = 0.0;
 
 void Tmp117_Init(I2C_HandleTypeDef *hi2c){
@@ -36,6 +37,7 @@ void Tmp117_Read(I2C_HandleTypeDef *hi2c) {
     uint8_t rx_buf[2];
 
 	if(isDataReady(hi2c)) {
+
 		HAL_I2C_Master_Transmit(hi2c, TMP117_ADDR, &reg, 1, HAL_MAX_DELAY);
 		HAL_I2C_Master_Receive(hi2c, TMP117_ADDR, rx_buf, 2, HAL_MAX_DELAY);
 
@@ -47,6 +49,7 @@ void Tmp117_Read(I2C_HandleTypeDef *hi2c) {
 		printf("Temperature = %.2f C\r\n", temp);
 		Tmp117_Read_Bit(hi2c);
 
+		cnt++;
 	}
 
 }

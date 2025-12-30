@@ -11,12 +11,12 @@
 #include <stdio.h>
 
 extern TIM_HandleTypeDef htim2;
+extern uint8_t cnt;
 
 #define RX_LINE_MAX 10
 
 static uint8_t  line[RX_LINE_MAX];
 static uint16_t idx = 0;
-uint8_t cnt  = 0;
 
 static const uint8_t start_txt[] =
 "\n Press Command\n"
@@ -49,9 +49,8 @@ void Com_DoCommand(const char *line)
     	Tmp117_Init(&hi2c2);
     	while(cnt < 10) {
 			Tmp117_Read(&hi2c2);
-			cnt++;
-			printf("%d\n", cnt);
     	}
+    	cnt = 0;
     }
 
     //RDIS
