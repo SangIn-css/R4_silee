@@ -47,6 +47,7 @@ extern UART_HandleTypeDef huart1;
 extern unsigned int read_done;
 
 int com_Flag = 0;
+int LD_Flag = 0;
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -139,10 +140,11 @@ int main(void)
 	  		HAL_UART_Receive_IT(&huart1, &rx_ch, 1);
 	  		com_Flag = 0;
 	  	 }
-//
-//		  if(LD_Flag == 1) {
-//
-//		  }
+
+		  if(LD_Flag == 1) {
+			  LD_ON();
+			  LD_Flag = 0;
+		  }
 	  	  enc_calc();
   }
   /* USER CODE END 3 */
@@ -208,8 +210,7 @@ void SystemClock_Config(void)
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 
 	if (htim->Instance == htim2.Instance) {
-		LD_ON();
-//		LD_flag = 1;
+		LD_Flag = 1;
 	}
 }
 

@@ -57,6 +57,7 @@ void LD_ON(void)
 		HAL_TIM_Base_Stop_IT(&htim2);
 		HAL_UART_Receive_IT(&huart1, &rx_ch, 1);
 		Com_Init();
+		LD_cnt = 0;
 	}
 }
 
