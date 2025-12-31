@@ -77,10 +77,7 @@ void TDC_Write_Data(uint8_t addr, uint8_t data)
 	SPI2->DR;
 
 #else
-	if(HAL_SPI_Transmit(&hspi2, (uint8_t*)val, 2, 100) != HAL_OK)
-    {
-      txString("TDCWriteData_SPI_Error\r\n");
-    }
+	HAL_SPI_Transmit(&hspi2, (uint8_t*)val, 2, 100);
 #endif
 
 	GPIOB->BSRR = SPI2_CS1_TDC_PB06_Pin;
@@ -109,11 +106,7 @@ uint8_t TDC_Read_8(uint8_t addr, uint8_t TDC_num)
 		rx = SPI2->DR;
 
 	#else
-		if(HAL_SPI_TransmitReceive(&hspi2, wr_val, rd_val, 4, 100) != HAL_OK)
-		{
-			txString("TDCRead8_SPI_Error\r\n");
-		}
-
+		HAL_SPI_TransmitReceive(&hspi2, wr_val, rd_val, 4, 100);
 	#endif
 	GPIOB->BSRR = SPI2_CS1_TDC_PB06_Pin;		// CS Set
 	GPIOB->BSRR = SPI2_CS2_TDC_PB07_Pin;
@@ -150,10 +143,7 @@ uint32_t TDC_Read_24(uint8_t addr, uint8_t TDC_num)
 		rx[1] = SPI2->DR;
 
 	#else
-		if(HAL_SPI_TransmitReceive(&hspi2, wr_val, rd_val, 4, 100) != HAL_OK)
-		{
-			txString("TDCRead24_SPI_Error\r\n");
-		}
+		HAL_SPI_TransmitReceive(&hspi2, wr_val, rd_val, 4, 100);
 
 	#endif
 	GPIOB->BSRR = SPI2_CS1_TDC_PB06_Pin;		// CS Set

@@ -1,5 +1,5 @@
 #include "main.h"
-#include "tmp117.h"
+#include "tmp.h"
 #include <stdio.h>
 
 uint16_t CR;		// value of Configuration Register
@@ -7,7 +7,7 @@ uint16_t TR;		// value of Temperature Register
 uint8_t cnt  = 0;
 float temp = 0.0;
 
-void Tmp117_Init(I2C_HandleTypeDef *hi2c){
+void tmp_Init(I2C_HandleTypeDef *hi2c){
 
 	uint8_t conf[3];
 
@@ -20,26 +20,26 @@ void Tmp117_Init(I2C_HandleTypeDef *hi2c){
 	uint8_t DRA = 0x0;		// ALERT Pin select bit					(0)
 	uint8_t SR = 0x0;		// Software Reset bit						(0)
 
-	conf[0] = TMP117_CONF_REG;
+	conf[0] = TMP_CONF_REG;
 	conf[1] = (uint16_t)( (MOD << 2) | (CONV1) );
 	conf[2] = (uint16_t)( (CONV2 << 7) | (AVG << 5) | (TnA << 4) | (POL << 3) | (DRA << 2) | (SR << 1) );
 
 	HAL_Delay(50);
 
-	HAL_I2C_Master_Transmit(hi2c,TMP117_ADDR, conf, 3, HAL_MAX_DELAY);
+	HAL_I2C_Master_Transmit(hi2c,TMP_ADDR, conf, 3, HAL_MAX_DELAY);
 
 }
 
 
-void Tmp117_Read(I2C_HandleTypeDef *hi2c) {
+void tmp_Read(I2C_HandleTypeDef *hi2c) {
 
-    uint8_t reg = TMP117_TEMP_REG;
+    uint8_t reg = TMP_TEMP_REG;
     uint8_t rx_buf[2];
 
 	if(isDataReady(hi2c)) {
 
-		HAL_I2C_Master_Transmit(hi2c, TMP117_ADDR, &reg, 1, HAL_MAX_DELAY);
-		HAL_I2C_Master_Receive(hi2c, TMP117_ADDR, rx_buf, 2, HAL_MAX_DELAY);
+		HAL_I2C_Master_Transmit(hi2c, TMP_ADDR, &reg, 1, HAL_MAX_DELAY);
+		HAL_I2C_Master_Receive(hi2c, TMP_ADDR, rx_buf, 2, HAL_MAX_DELAY);
 
 		printf("Conf Bit = %04x \n", CR);
 
@@ -47,7 +47,7 @@ void Tmp117_Read(I2C_HandleTypeDef *hi2c) {
 		temp =  TR * 0.0078125f;		//convert 16Bit to decimal Temperature
 
 		printf("Temperature = %.2f C\r\n", temp);
-		Tmp117_Read_Bit(hi2c);
+		tmp_Read_Bit(hi2c);
 
 		cnt++;
 	}
@@ -55,7 +55,7 @@ void Tmp117_Read(I2C_HandleTypeDef *hi2c) {
 }
 
 
-void Tmp117_Read_Bit(I2C_HandleTypeDef *hi2c)
+void tmp_Read_Bit(I2C_HandleTypeDef *hi2c)
 {
 	printf("Temp Bit = %04x \n\n", TR);
 }
@@ -65,8 +65,8 @@ uint16_t isDataReady(I2C_HandleTypeDef *hi2c) {
 	uint8_t rx_buf[2];
 	uint8_t conf = 0x01;	// Configuration Register Address
 
-	HAL_I2C_Master_Transmit(hi2c, TMP117_ADDR, &conf, 1, HAL_MAX_DELAY);			//Register Pointer
-	HAL_I2C_Master_Receive(hi2c, TMP117_ADDR, rx_buf, 2, HAL_MAX_DELAY);
+	HAL_I2C_Master_Transmit(hi2c, TMP_ADDR, &conf, 1, HAL_MAX_DELAY);			//Register Pointer
+	HAL_I2C_Master_Receive(hi2c, TMP_ADDR, rx_buf, 2, HAL_MAX_DELAY);
 
 	CR = (uint16_t)((rx_buf[0] << 8) | rx_buf[1]);
 	uint16_t bool = CR & 0x2000;				// Is Data_Ready Register set

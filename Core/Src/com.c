@@ -2,13 +2,13 @@
 #include "tim.h"
 #include "i2c.h"
 #include "com.h"
-#include "tmp117.h"
 #include "LD.h"
 #include "TDC.h"
 #include "usart.h"
 #include "stm32f4xx_hal.h"
 #include <string.h>
 #include <stdio.h>
+#include <tmp.h>
 
 extern TIM_HandleTypeDef htim2;
 extern uint8_t cnt;
@@ -41,14 +41,13 @@ void Com_DoCommand(const char *line)
     if (strstr(line, "STOP")) {
     	htim8.Instance->CCR1 = 0;	//Stop motor
     	NVIC_SystemReset();
-    	printf("stop\n");
     }
 
     //RTMP
     else if (strstr(line, "RTMP")) {
-    	Tmp117_Init(&hi2c2);
+    	tmp_Init(&hi2c2);
     	while(cnt < 10) {
-			Tmp117_Read(&hi2c2);
+			tmp_Read(&hi2c2);
     	}
     	cnt = 0;
     }

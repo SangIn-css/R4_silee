@@ -1,8 +1,8 @@
 #include "main.h"
 #include "enc.h"
 #include "tim.h"
-#include "tmp117.h"
 #include <stdio.h>
+#include <tmp.h>
 
 extern float temp;
 

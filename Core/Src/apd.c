@@ -2,13 +2,12 @@
 #include "apd.h"
 #include <stdio.h>
 
-void apd_Write_Data(uint8_t data)
+void apd_Write_Data(uint16_t data_bit)
 {
-	uint8_t ctrl_bit = 0x01 << 10;
-	uint16_t data_bit = 0x03FF;
+	uint16_t ctrl_bit = 0x01 << 10;
 	uint16_t val = ctrl_bit | data_bit;
 
-	GPIOC->BSRR = SPI3_CS_BIASCTRL_PC00_Pin << 16U;
+	GPIOC->BSRR = SPI3_CS_BIASCTRL_PC00_Pin << 16U;	//SET CS
 
 #if 1
     SPI3->DR = val;
@@ -17,10 +16,8 @@ void apd_Write_Data(uint8_t data)
 	SPI3->DR;
 
 #else
-	if(HAL_SPI_Transmit(&hspi3, val, 1, 100) != HAL_OK)
-    {
-      txString("TDCWriteData_SPI_Error\r\n");
-    }
+	HAL_SPI_Transmit(&hspi3, val, 1, 100)
+
 #endif
 
 	GPIOC->BSRR = SPI3_CS_BIASCTRL_PC00_Pin;

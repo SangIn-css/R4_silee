@@ -1,0 +1,4 @@
+../Core/Src/tmp.c:10:6:tmp_Init	1
+../Core/Src/tmp.c:34:6:tmp_Read	2
+../Core/Src/tmp.c:58:6:tmp_Read_Bit	1
+../Core/Src/tmp.c:63:10:isDataReady	1
