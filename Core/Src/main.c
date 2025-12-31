@@ -46,7 +46,7 @@ extern I2C_HandleTypeDef hi2c2;
 extern UART_HandleTypeDef huart1;
 extern unsigned int read_done;
 
-int com_Flag = 1;
+int com_Flag = 0;
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/

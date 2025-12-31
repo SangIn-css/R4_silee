@@ -92,6 +92,5 @@ void Com_OnRxChar(uint8_t ch)
     if (idx < RX_LINE_MAX - 1) {
         line[idx] = ch;
         idx++;
-        printf("%d\n", idx);
     }
 }
