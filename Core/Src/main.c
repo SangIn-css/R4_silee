@@ -48,6 +48,7 @@ extern unsigned int read_done;
 
 int com_Flag = 0;
 int LD_Flag = 0;
+int enc_Flag = 0;
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -145,6 +146,11 @@ int main(void)
 			  LD_ON();
 			  LD_Flag = 0;
 		  }
+
+		  if(enc_Flag == 1) {
+			  enc_read();
+			  enc_Flag = 0;
+		  }
 	  	  enc_calc();
   }
   /* USER CODE END 3 */
@@ -205,8 +211,6 @@ void SystemClock_Config(void)
 
 /* USER CODE BEGIN 4 */
 
-
-// Turn on LD by using TIM2 //
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 
 	if (htim->Instance == htim2.Instance) {
@@ -217,7 +221,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim) {
 
 	if (htim->Instance == TIM1 && htim->Channel == HAL_TIM_ACTIVE_CHANNEL_1) {
-		enc_read();
+		enc_Flag = 1;
 	}
 }
 
