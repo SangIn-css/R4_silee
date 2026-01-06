@@ -1,1 +1,2 @@
 ../Core/Src/apd.c:5:6:apd_Write_Data	24	static
+../Core/Src/apd.c:22:6:apd_Transmit_Data	16	static
