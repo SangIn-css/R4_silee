@@ -25,9 +25,10 @@ void apd_Transmit_Data(uint16_t data_bit) {
 
 #if 1
     SPI3->DR = data_bit;
-	while ((SPI2->SR & SPI_FLAG_TXE) == (uint16_t)RESET) { ; }
-	while ((SPI2->SR & SPI_FLAG_RXNE) == (uint16_t)RESET){ ; }
+	while ((SPI3->SR & SPI_FLAG_TXE) == (uint16_t)RESET) { ; }		// problem (SPI Flag check)
+	while ((SPI3->SR & SPI_FLAG_RXNE) == (uint16_t)RESET){ ; }
 	SPI3->DR;
+	printf("Start4\n");
 
 #else
 	HAL_SPI_Transmit(&hspi3, val, 1, 100);

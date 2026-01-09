@@ -59,7 +59,6 @@ void TDC_Conf2_Init() {
 	}
 }
 
-
 void TDC_Write_Data(uint8_t addr, uint8_t data)
 {
 	uint16_t val = addr;
