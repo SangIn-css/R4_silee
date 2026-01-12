@@ -66,21 +66,21 @@ void TDC_Write_Data(uint8_t addr, uint8_t data)
 	val <<= 8;
 	val |= data;
 
-	GPIOB->BSRR = SPI2_CS1_TDC_PB06_Pin << 16U;
-	GPIOB->BSRR = SPI2_CS2_TDC_PB07_Pin << 16U;
+	HAL_GPIO_WritePin(GPIOB, SPI2_CS1_TDC_PB06_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(GPIOB, SPI2_CS2_TDC_PB07_Pin, GPIO_PIN_RESET);
 
 #if 1
     SPI2->DR = val;
-	while ((SPI2->SR & SPI_FLAG_TXE) == (uint16_t)RESET) { ; }
+	while ((SPI2->SR & SPI_FLAG_TXE) == (uint16_t)RESET) { ; }		// Wait until data is transmitted
 	while ((SPI2->SR & SPI_FLAG_RXNE) == (uint16_t)RESET){ ; }
 	SPI2->DR;
 
 #else
 	HAL_SPI_Transmit(&hspi2, (uint8_t*)val, 2, 100);
-#endif
 
-	GPIOB->BSRR = SPI2_CS1_TDC_PB06_Pin;
-	GPIOB->BSRR = SPI2_CS2_TDC_PB07_Pin;
+#endif
+	HAL_GPIO_WritePin(GPIOB, SPI2_CS1_TDC_PB06_Pin, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(GPIOB, SPI2_CS2_TDC_PB07_Pin, GPIO_PIN_SET);
 }
 
 uint8_t TDC_Read_8(uint8_t addr, uint8_t TDC_num)
@@ -91,11 +91,11 @@ uint8_t TDC_Read_8(uint8_t addr, uint8_t TDC_num)
 	uint16_t rx;
 	uint8_t Rx;
 
-	if (TDC_num == 0x01) {
-		GPIOB->BSRR = SPI2_CS1_TDC_PB06_Pin << 16U; 	// CS1 Reset
+	if (TDC_num == 0x01) {						// CS1 Reset
+		HAL_GPIO_WritePin(GPIOB, SPI2_CS1_TDC_PB06_Pin, GPIO_PIN_RESET);
 	}
-	else if (TDC_num == 0x02) {
-		GPIOB->BSRR = SPI2_CS2_TDC_PB07_Pin << 16U; 	// CS2 Reset
+	else if (TDC_num == 0x02) {			// CS2 Reset
+		HAL_GPIO_WritePin(GPIOB, SPI2_CS2_TDC_PB07_Pin, GPIO_PIN_RESET);
 	}
 
 	#if 1
@@ -107,8 +107,8 @@ uint8_t TDC_Read_8(uint8_t addr, uint8_t TDC_num)
 	#else
 		HAL_SPI_TransmitReceive(&hspi2, wr_val, rd_val, 4, 100);
 	#endif
-	GPIOB->BSRR = SPI2_CS1_TDC_PB06_Pin;		// CS Set
-	GPIOB->BSRR = SPI2_CS2_TDC_PB07_Pin;
+		HAL_GPIO_WritePin(GPIOB, SPI2_CS1_TDC_PB06_Pin, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(GPIOB, SPI2_CS2_TDC_PB07_Pin, GPIO_PIN_SET);
 
 	Rx = (uint8_t)(rx & 0x00FF);
 	return Rx;
@@ -123,11 +123,11 @@ uint32_t TDC_Read_24(uint8_t addr, uint8_t TDC_num)
 	uint16_t rx[2];
 	uint32_t Rx;
 
-	if (TDC_num == 0x01) {
-		GPIOB->BSRR = SPI2_CS1_TDC_PB06_Pin << 16U; 	// CS1 Reset
+	if (TDC_num == 0x01) {					// CS1 Reset
+		HAL_GPIO_WritePin(GPIOB, SPI2_CS1_TDC_PB06_Pin, GPIO_PIN_RESET);
 	}
-	else if (TDC_num == 0x02) {
-		GPIOB->BSRR = SPI2_CS2_TDC_PB07_Pin << 16U; 	// CS2 Reset
+	else if (TDC_num == 0x02) {		// CS2 Reset
+		HAL_GPIO_WritePin(GPIOB, SPI2_CS2_TDC_PB07_Pin, GPIO_PIN_RESET);
 	}
 
 	#if 1
@@ -145,8 +145,8 @@ uint32_t TDC_Read_24(uint8_t addr, uint8_t TDC_num)
 		HAL_SPI_TransmitReceive(&hspi2, wr_val, rd_val, 4, 100);
 
 	#endif
-	GPIOB->BSRR = SPI2_CS1_TDC_PB06_Pin;		// CS Set
-	GPIOB->BSRR = SPI2_CS2_TDC_PB07_Pin;
+		HAL_GPIO_WritePin(GPIOB, SPI2_CS1_TDC_PB06_Pin, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(GPIOB, SPI2_CS2_TDC_PB07_Pin, GPIO_PIN_SET);
 
 	rx[0] &= 0x00FF;
 	Rx = (rx[0] << 16) | (rx[1]);

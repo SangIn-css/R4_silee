@@ -1,5 +1,12 @@
 {
     "files.associations": {
         "main.h": "c"
-    }
+    },
+    "cmake.configureArgs": [
+        "-DARM_TOOLCHAIN_DIR=D:/tools/gcc-arm-none-eabi-9-2020-q2-update-win32/bin",
+        "-DCMAKE_MAKE_PROGRAM=D:/tools/build_tools/xpack-windows-build-tools-4.2.1-2/bin/make.exe"
+    ],
+    "cmake.generator": "Unix Makefiles",
+    "cortex-debug.armToolchainPath": "C:\\Program Files (x86)\\GNU Arm Embedded Toolchain\\10 2021.10\\bin",
+    "cmake.ignoreCMakeListsMissing": true
 }
