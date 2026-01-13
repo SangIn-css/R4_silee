@@ -21,7 +21,7 @@ void apd_Transmit_Data(uint16_t data_bit) {
 
 #if 1
     SPI3->DR = data_bit;
-//	while ((SPI3->SR & SPI_FLAG_TXE) == (uint16_t)RESET) { ; }
+	while ((SPI3->SR & SPI_FLAG_TXE) == RESET) { ; }
 	SPI3->DR;
 	printf("Start4\n");
 

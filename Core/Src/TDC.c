@@ -71,8 +71,8 @@ void TDC_Write_Data(uint8_t addr, uint8_t data)
 
 #if 1
     SPI2->DR = val;
-	while ((SPI2->SR & SPI_FLAG_TXE) == (uint16_t)RESET) { ; }		// Wait until data is transmitted
-	while ((SPI2->SR & SPI_FLAG_RXNE) == (uint16_t)RESET){ ; }
+	while ((SPI2->SR & SPI_FLAG_TXE) == RESET) { ; }		// Wait until data is transmitted
+	while ((SPI2->SR & SPI_FLAG_RXNE) == RESET){ ; }
 	SPI2->DR;
 
 #else
@@ -100,8 +100,8 @@ uint8_t TDC_Read_8(uint8_t addr, uint8_t TDC_num)
 
 	#if 1
 		SPI2->DR = val;		// Transmit Register Address
-		while ((SPI2->SR & SPI_FLAG_TXE) == (uint16_t)RESET) { ; }
-		while ((SPI2->SR & SPI_FLAG_RXNE) == (uint16_t)RESET){ ; }
+		while ((SPI2->SR & SPI_FLAG_TXE) == RESET) { ; }
+		while ((SPI2->SR & SPI_FLAG_RXNE) == RESET){ ; }
 		rx = SPI2->DR;
 
 	#else
@@ -132,13 +132,13 @@ uint32_t TDC_Read_24(uint8_t addr, uint8_t TDC_num)
 
 	#if 1
 		SPI2->DR = val;		// Transmit Register Address
-		while ((SPI2->SR & SPI_FLAG_TXE) == (uint16_t)RESET) { ; }
-		while ((SPI2->SR & SPI_FLAG_RXNE) == (uint16_t)RESET){ ; }
+		while ((SPI2->SR & SPI_FLAG_TXE) == RESET) { ; }
+		while ((SPI2->SR & SPI_FLAG_RXNE) == RESET){ ; }
 		rx[0] = SPI2->DR;
 
 		SPI2->DR = 0x0000;	// Transmit Dummy value
-		while ((SPI2->SR & SPI_FLAG_TXE) == (uint16_t)RESET){ ; }
-		while ((SPI2->SR & SPI_FLAG_RXNE) == (uint16_t)RESET){ ; }
+		while ((SPI2->SR & SPI_FLAG_TXE) == RESET){ ; }
+		while ((SPI2->SR & SPI_FLAG_RXNE) == RESET){ ; }
 		rx[1] = SPI2->DR;
 
 	#else
