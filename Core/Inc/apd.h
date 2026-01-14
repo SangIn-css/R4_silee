@@ -7,6 +7,8 @@ extern "C" {
 
 #include "stm32f4xx_hal.h"
 
+#define USE_SPI3_DIRECT 1    
+
 void apd_Write_Data(uint16_t data_bit);
 void apd_Transmit_Data(uint16_t data_bit);
 

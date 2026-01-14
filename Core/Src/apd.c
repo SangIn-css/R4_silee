@@ -19,7 +19,7 @@ void apd_Transmit_Data(uint16_t data_bit) {
 
 	HAL_GPIO_WritePin(GPIOC, SPI3_CS_BIASCTRL_PC00_Pin, GPIO_PIN_RESET); // CS Reset
 
-#if 1
+#if USE_SPI3_DIRECT 
     SPI3->DR = data_bit; // insert data_bit into DR register
 	while ((SPI3->SR & SPI_FLAG_TXE) == RESET) { ; }
 	SPI3->DR;

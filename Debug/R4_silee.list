@@ -35,17 +35,17 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  15 .debug_rnglists 000010c6  00000000  00000000  0002ba98  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_macro  000271b5  00000000  00000000  0002cb5e  2**0
+ 16 .debug_macro  000271c9  00000000  00000000  0002cb5e  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   0001ecda  00000000  00000000  00053d13  2**0
+ 17 .debug_line   0001ecda  00000000  00000000  00053d27  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    000e4a92  00000000  00000000  000729ed  2**0
+ 18 .debug_str    000e4ab6  00000000  00000000  00072a01  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000043  00000000  00000000  0015747f  2**0
+ 19 .comment      00000043  00000000  00000000  001574b7  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  000069d8  00000000  00000000  001574c4  2**2
+ 20 .debug_frame  000069d8  00000000  00000000  001574fc  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 21 .debug_line_str 00000064  00000000  00000000  0015de9c  2**0
+ 21 .debug_line_str 00000064  00000000  00000000  0015ded4  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -1332,7 +1332,7 @@ void LD_ON(void)
  8001002:	2bc7      	cmp	r3, #199	@ 0xc7
  8001004:	ddf8      	ble.n	8000ff8 <LD_ON+0x40>
 	}
-
+	
 	float norm_LSB = 62.5 / (((unsigned int)TDC_Read_24(TDC_CAL2_REG, 2) - (unsigned int)TDC_Read_24(TDC_CAL1_REG, 1)) / (CALI2_PERIODS - 1.0));
  8001006:	2102      	movs	r1, #2
  8001008:	201c      	movs	r0, #28
@@ -1728,7 +1728,7 @@ void TDC_Write_Data(uint8_t addr, uint8_t data)
  80012e6:	4812      	ldr	r0, [pc, #72]	@ (8001330 <TDC_Write_Data+0x84>)
  80012e8:	f002 fc6c 	bl	8003bc4 <HAL_GPIO_WritePin>
 
-#if 1
+#if USE_SPI1_DIRECT
     SPI2->DR = val;
  80012ec:	4a11      	ldr	r2, [pc, #68]	@ (8001334 <TDC_Write_Data+0x88>)
  80012ee:	89fb      	ldrh	r3, [r7, #14]
@@ -1797,7 +1797,7 @@ uint8_t TDC_Read_8(uint8_t addr, uint8_t TDC_num)
 	uint16_t rx;
 	uint8_t Rx;
 
-	if (TDC_num == 0x01) {						// CS1 Reset
+	if (TDC_num == 0x01) {				// CS1 Reset
  8001352:	79bb      	ldrb	r3, [r7, #6]
  8001354:	2b01      	cmp	r3, #1
  8001356:	d105      	bne.n	8001364 <TDC_Read_8+0x2c>
@@ -1819,7 +1819,7 @@ uint8_t TDC_Read_8(uint8_t addr, uint8_t TDC_num)
  8001370:	f002 fc28 	bl	8003bc4 <HAL_GPIO_WritePin>
 	}
 
-	#if 1
+	#if USE_SPI1_DIRECT
 		SPI2->DR = val;		// Transmit Register Address
  8001374:	4a13      	ldr	r2, [pc, #76]	@ (80013c4 <TDC_Read_8+0x8c>)
  8001376:	89fb      	ldrh	r3, [r7, #14]
@@ -1899,7 +1899,7 @@ uint32_t TDC_Read_24(uint8_t addr, uint8_t TDC_num)
  80013e2:	79bb      	ldrb	r3, [r7, #6]
  80013e4:	2b01      	cmp	r3, #1
  80013e6:	d105      	bne.n	80013f4 <TDC_Read_24+0x2c>
-		HAL_GPIO_WritePin(GPIOB, SPI2_CS1_TDC_PB06_Pin, GPIO_PIN_RESET);}
+		HAL_GPIO_WritePin(GPIOB, SPI2_CS1_TDC_PB06_Pin, GPIO_PIN_RESET); }
  80013e8:	2200      	movs	r2, #0
  80013ea:	2140      	movs	r1, #64	@ 0x40
  80013ec:	4826      	ldr	r0, [pc, #152]	@ (8001488 <TDC_Read_24+0xc0>)
@@ -1909,13 +1909,13 @@ uint32_t TDC_Read_24(uint8_t addr, uint8_t TDC_num)
  80013f4:	79bb      	ldrb	r3, [r7, #6]
  80013f6:	2b02      	cmp	r3, #2
  80013f8:	d104      	bne.n	8001404 <TDC_Read_24+0x3c>
-		HAL_GPIO_WritePin(GPIOB, SPI2_CS2_TDC_PB07_Pin, GPIO_PIN_RESET);}
+		HAL_GPIO_WritePin(GPIOB, SPI2_CS2_TDC_PB07_Pin, GPIO_PIN_RESET); }
  80013fa:	2200      	movs	r2, #0
  80013fc:	2180      	movs	r1, #128	@ 0x80
  80013fe:	4822      	ldr	r0, [pc, #136]	@ (8001488 <TDC_Read_24+0xc0>)
  8001400:	f002 fbe0 	bl	8003bc4 <HAL_GPIO_WritePin>
 
-	#if 1
+	#if USE_SPI1_DIRECT
 		SPI2->DR = val;		// Transmit Register Address
  8001404:	4a21      	ldr	r2, [pc, #132]	@ (800148c <TDC_Read_24+0xc4>)
  8001406:	8afb      	ldrh	r3, [r7, #22]
@@ -2302,7 +2302,7 @@ void apd_Transmit_Data(uint16_t data_bit) {
  8001642:	480d      	ldr	r0, [pc, #52]	@ (8001678 <apd_Transmit_Data+0x44>)
  8001644:	f002 fabe 	bl	8003bc4 <HAL_GPIO_WritePin>
 
-#if 1
+#if USE_SPI3_DIRECT 
     SPI3->DR = data_bit; // insert data_bit into DR register
  8001648:	4a0c      	ldr	r2, [pc, #48]	@ (800167c <apd_Transmit_Data+0x48>)
  800164a:	88fb      	ldrh	r3, [r7, #6]

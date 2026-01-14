@@ -31,7 +31,7 @@ void LD_ON(void)
 	for(int i = 0; i < 200; i++) {
 		asm("nop");
 	}
-	문제의 본질을 정의하고 해결?
+	
 	float norm_LSB = 62.5 / (((unsigned int)TDC_Read_24(TDC_CAL2_REG, 2) - (unsigned int)TDC_Read_24(TDC_CAL1_REG, 1)) / (CALI2_PERIODS - 1.0));
 	float ToF = ((unsigned int)TDC_Read_24(TDC_TIME1_REG, 2) - (unsigned int)TDC_Read_24(TDC_TIME1_REG, 1)) * norm_LSB;
 
