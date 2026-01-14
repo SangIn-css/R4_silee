@@ -27,6 +27,7 @@ static const uint8_t start_txt[] =
 " 4) DRMT : Drive Motor\n"
 " 5) RENC : Read Encoder\n"
 " 6) CMPB : Compensate Bias\n"
+" 7) ETHE : Ethernet\n"
 " >> ";
 
 void Com_Init()
@@ -73,6 +74,12 @@ void Com_DoCommand(const char *line)
     }
 
     //CMPB
+    else if (strstr(line, "CMPB")) {
+    	uint16_t data = 0x100;
+    	apd_Write_Data(data);
+    }
+
+    //ETHE
     else if (strstr(line, "CMPB")) {
     	uint16_t data = 0x100;
     	apd_Write_Data(data);
