@@ -2,6 +2,7 @@
 #include "TDC.h"
 #include "tim.h"
 #include "LD.h"
+#include "spi.h"
 #include <stdio.h>
 
 uint16_t TDC_CR1;		//Configuration Register
@@ -62,7 +63,7 @@ void TDC_Conf2_Init() {
 void TDC_Write_Data(uint8_t addr, uint8_t data)
 {
 	uint16_t val = addr;
-	val |= 0x40U;
+	val |= 0x40U;	//R/W = 1 (Write)
 	val <<= 8;
 	val |= data;
 

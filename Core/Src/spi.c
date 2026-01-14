@@ -199,7 +199,6 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef* spiHandle)
     /**SPI3 GPIO Configuration
     PC1     ------> SPI3_MOSI
     PC10     ------> SPI3_SCK
-    PC11     ------> SPI3_MISO
     */
     GPIO_InitStruct.Pin = SPI3_MOSI_BIASCTRL_PC01_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
@@ -208,12 +207,12 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef* spiHandle)
     GPIO_InitStruct.Alternate = GPIO_AF5_SPI3;
     HAL_GPIO_Init(SPI3_MOSI_BIASCTRL_PC01_GPIO_Port, &GPIO_InitStruct);
 
-    GPIO_InitStruct.Pin = SPI3_SCLK_BIASCTRL_PC10_Pin|GPIO_PIN_11;
+    GPIO_InitStruct.Pin = SPI3_SCLK_BIASCTRL_PC10_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
     GPIO_InitStruct.Alternate = GPIO_AF6_SPI3;
-    HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+    HAL_GPIO_Init(SPI3_SCLK_BIASCTRL_PC10_GPIO_Port, &GPIO_InitStruct);
 
   /* USER CODE BEGIN SPI3_MspInit 1 */
 
@@ -275,9 +274,8 @@ void HAL_SPI_MspDeInit(SPI_HandleTypeDef* spiHandle)
     /**SPI3 GPIO Configuration
     PC1     ------> SPI3_MOSI
     PC10     ------> SPI3_SCK
-    PC11     ------> SPI3_MISO
     */
-    HAL_GPIO_DeInit(GPIOC, SPI3_MOSI_BIASCTRL_PC01_Pin|SPI3_SCLK_BIASCTRL_PC10_Pin|GPIO_PIN_11);
+    HAL_GPIO_DeInit(GPIOC, SPI3_MOSI_BIASCTRL_PC01_Pin|SPI3_SCLK_BIASCTRL_PC10_Pin);
 
   /* USER CODE BEGIN SPI3_MspDeInit 1 */
 
