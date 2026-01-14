@@ -1895,34 +1895,32 @@ uint32_t TDC_Read_24(uint8_t addr, uint8_t TDC_num)
 	uint16_t rx[2];
 	uint32_t Rx;
 
-	if (TDC_num == 0x01) {					// CS1 Reset
+	if (TDC_num == 0x01) {			// CS1 Reset
  80013e2:	79bb      	ldrb	r3, [r7, #6]
  80013e4:	2b01      	cmp	r3, #1
  80013e6:	d105      	bne.n	80013f4 <TDC_Read_24+0x2c>
-		HAL_GPIO_WritePin(GPIOB, SPI2_CS1_TDC_PB06_Pin, GPIO_PIN_RESET);
+		HAL_GPIO_WritePin(GPIOB, SPI2_CS1_TDC_PB06_Pin, GPIO_PIN_RESET);}
  80013e8:	2200      	movs	r2, #0
  80013ea:	2140      	movs	r1, #64	@ 0x40
  80013ec:	4826      	ldr	r0, [pc, #152]	@ (8001488 <TDC_Read_24+0xc0>)
  80013ee:	f002 fbe9 	bl	8003bc4 <HAL_GPIO_WritePin>
  80013f2:	e007      	b.n	8001404 <TDC_Read_24+0x3c>
-	}
 	else if (TDC_num == 0x02) {		// CS2 Reset
  80013f4:	79bb      	ldrb	r3, [r7, #6]
  80013f6:	2b02      	cmp	r3, #2
  80013f8:	d104      	bne.n	8001404 <TDC_Read_24+0x3c>
-		HAL_GPIO_WritePin(GPIOB, SPI2_CS2_TDC_PB07_Pin, GPIO_PIN_RESET);
+		HAL_GPIO_WritePin(GPIOB, SPI2_CS2_TDC_PB07_Pin, GPIO_PIN_RESET);}
  80013fa:	2200      	movs	r2, #0
  80013fc:	2180      	movs	r1, #128	@ 0x80
  80013fe:	4822      	ldr	r0, [pc, #136]	@ (8001488 <TDC_Read_24+0xc0>)
  8001400:	f002 fbe0 	bl	8003bc4 <HAL_GPIO_WritePin>
-	}
 
 	#if 1
 		SPI2->DR = val;		// Transmit Register Address
  8001404:	4a21      	ldr	r2, [pc, #132]	@ (800148c <TDC_Read_24+0xc4>)
  8001406:	8afb      	ldrh	r3, [r7, #22]
  8001408:	60d3      	str	r3, [r2, #12]
-		while ((SPI2->SR & SPI_FLAG_TXE) == RESET) { ; }
+		while ((SPI2->SR & SPI_FLAG_TXE) == RESET) { ; } 
  800140a:	bf00      	nop
  800140c:	4b1f      	ldr	r3, [pc, #124]	@ (800148c <TDC_Read_24+0xc4>)
  800140e:	689b      	ldr	r3, [r3, #8]
@@ -2305,11 +2303,11 @@ void apd_Transmit_Data(uint16_t data_bit) {
  8001644:	f002 fabe 	bl	8003bc4 <HAL_GPIO_WritePin>
 
 #if 1
-    SPI3->DR = data_bit;
+    SPI3->DR = data_bit; // insert data_bit into DR register
  8001648:	4a0c      	ldr	r2, [pc, #48]	@ (800167c <apd_Transmit_Data+0x48>)
  800164a:	88fb      	ldrh	r3, [r7, #6]
  800164c:	60d3      	str	r3, [r2, #12]
-	while ((SPI3->SR & SPI_FLAG_TXE) == (uint16_t)RESET) { ; }
+	while ((SPI3->SR & SPI_FLAG_TXE) == RESET) { ; }
  800164e:	bf00      	nop
  8001650:	4b0a      	ldr	r3, [pc, #40]	@ (800167c <apd_Transmit_Data+0x48>)
  8001652:	689b      	ldr	r3, [r3, #8]

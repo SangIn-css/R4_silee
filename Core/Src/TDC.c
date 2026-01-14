@@ -123,16 +123,14 @@ uint32_t TDC_Read_24(uint8_t addr, uint8_t TDC_num)
 	uint16_t rx[2];
 	uint32_t Rx;
 
-	if (TDC_num == 0x01) {					// CS1 Reset
-		HAL_GPIO_WritePin(GPIOB, SPI2_CS1_TDC_PB06_Pin, GPIO_PIN_RESET);
-	}
+	if (TDC_num == 0x01) {			// CS1 Reset
+		HAL_GPIO_WritePin(GPIOB, SPI2_CS1_TDC_PB06_Pin, GPIO_PIN_RESET); }
 	else if (TDC_num == 0x02) {		// CS2 Reset
-		HAL_GPIO_WritePin(GPIOB, SPI2_CS2_TDC_PB07_Pin, GPIO_PIN_RESET);
-	}
+		HAL_GPIO_WritePin(GPIOB, SPI2_CS2_TDC_PB07_Pin, GPIO_PIN_RESET); }
 
 	#if 1
 		SPI2->DR = val;		// Transmit Register Address
-		while ((SPI2->SR & SPI_FLAG_TXE) == RESET) { ; }
+		while ((SPI2->SR & SPI_FLAG_TXE) == RESET) { ; } 
 		while ((SPI2->SR & SPI_FLAG_RXNE) == RESET){ ; }
 		rx[0] = SPI2->DR;
 
