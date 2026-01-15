@@ -80,7 +80,7 @@ void Com_DoCommand(const char *line)
     }
 
     //ETHE
-    else if (strstr(line, "CMPB")) {
+    else if (strstr(line, "ETHE")) {
     	uint16_t data = 0x100;
     	apd_Write_Data(data);
     }
