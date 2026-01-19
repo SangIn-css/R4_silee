@@ -16,7 +16,7 @@ extern "C" {
 #define TDC_CAL1_REG		0x1B
 #define TDC_CAL2_REG		0x1C
 
-#define USE_SPI1_DIRECT 1
+#define USE_SPI2_DIRECT 1
 
 void TDC_Init();
 void TDC_Conf1_Init();

@@ -3,8 +3,10 @@
 #include "spi.h"
 #include <stdio.h>
 
-void eth_Write_Data(uint8_t addr, uint8_t data)
+void eth_Write_Data(uint16_t addr, uint8_t data)
 {
+	HAL_GPIO_WritePin(GPIOB, ENET_SCSn_Pin, GPIO_PIN_RESET);
+
 	uint16_t val = addr;
 	val |= 0x40U;	//R/W = 1 (Write)
 	val <<= 8;
@@ -17,8 +19,8 @@ void eth_Write_Data(uint8_t addr, uint8_t data)
 	SPI1->DR;
 
 #else
-	HAL_SPI_Transmit(&hspi2, (uint8_t*)val, 2, 100);
+	HAL_SPI_Transmit(&hspi1, (uint8_t*)val, 2, 100);
 
 #endif
-
+	HAL_GPIO_WritePin(GPIOB, ENET_SCSn_Pin, GPIO_PIN_SET);
 }

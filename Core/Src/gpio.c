@@ -58,8 +58,8 @@ void MX_GPIO_Init(void)
                           |GUIDE_LD_PC07_Pin|ERR_PULSE_Pin|IND_RED_LED_PC09_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, LD_TRIG_PB02_Pin|ENET_SCSn_Pin|ENET_RSTn_Pin|ENET_INTn_Pin
-                          |IND_BLU_LED_PB05_Pin|REF_SIG_PB08_Pin|IND_GRN_LED_PB09_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, LD_TRIG_PB02_Pin|ENET_SCSn_Pin|ENET_RSTn_Pin|IND_BLU_LED_PB05_Pin
+                          |REF_SIG_PB08_Pin|IND_GRN_LED_PB09_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOB, SPI2_CS1_TDC_PB06_Pin|SPI2_CS2_TDC_PB07_Pin, GPIO_PIN_SET);
@@ -105,12 +105,18 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
   HAL_GPIO_Init(LD_TRIG_PB02_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : ENET_SCSn_Pin ENET_RSTn_Pin ENET_INTn_Pin */
-  GPIO_InitStruct.Pin = ENET_SCSn_Pin|ENET_RSTn_Pin|ENET_INTn_Pin;
+  /*Configure GPIO pins : ENET_SCSn_Pin ENET_RSTn_Pin */
+  GPIO_InitStruct.Pin = ENET_SCSn_Pin|ENET_RSTn_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : ENET_INTn_Pin */
+  GPIO_InitStruct.Pin = ENET_INTn_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(ENET_INTn_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : PC11 */
   GPIO_InitStruct.Pin = GPIO_PIN_11;

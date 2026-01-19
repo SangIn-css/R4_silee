@@ -9,7 +9,7 @@ extern "C" {
 
 #define USE_SPI1_DIRECT 1 
 
-void eth_Write_Data(uint8_t addr, uint8_t data)
+void eth_Write_Data(uint8_t addr, uint8_t data);
 
 #ifdef __cplusplus
 }
