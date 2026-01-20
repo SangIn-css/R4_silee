@@ -11,10 +11,10 @@ extern "C" {
 #define TDC_CONF2_REG	0x01
 
 #define TDC_TIME1_REG 	0x10
-#define TDC_TIME2_REG	    0x12
+#define TDC_TIME2_REG	0x12
 
-#define TDC_CAL1_REG		0x1B
-#define TDC_CAL2_REG		0x1C
+#define TDC_CAL1_REG	0x1B
+#define TDC_CAL2_REG	0x1C
 
 #define USE_SPI2_DIRECT 1
 
