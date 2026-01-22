@@ -6,6 +6,7 @@
 #include "TDC.h"
 #include "usart.h"
 #include "apd.h"
+#include "eth.h"
 #include "stm32f4xx_hal.h"
 #include <string.h>
 #include <stdio.h>
@@ -81,8 +82,7 @@ void Com_DoCommand(const char *line)
 
     //ETHE
     else if (strstr(line, "ETHE")) {
-    	uint16_t data = 0x100;
-    	apd_Write_Data(data);
+        eth_Init();
     }
 
     else {

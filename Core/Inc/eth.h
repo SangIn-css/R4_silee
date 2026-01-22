@@ -81,9 +81,10 @@ extern "C" {
 #define Socket_7_Tx_Register 11110
 #define Socket_7_Rx_Register 11111
 
-void eth_Write_Data();
+void eth_Init();
 void eth_Write_1Byte(uint16_t addr, uint8_t BSB, uint8_t data);
-void eth_Write_nByte(uint16_t addr, uint8_t BSB, uint8_t data);
+void eth_Write_nByte(uint16_t addr, uint8_t BSB, uint8_t data[], int datasize);
+void eth_Read_1Byte(uint16_t addr, uint8_t BSB, uint8_t data);
 
 #ifdef __cplusplus
 }
