@@ -57,11 +57,7 @@ void eth_Read_1Byte(uint16_t addr, uint8_t BSB, uint8_t data) {
 
 	HAL_GPIO_WritePin(GPIOB, ENET_SCSn_Pin, GPIO_PIN_RESET);
 
-	uint16_t ctrl_phs = BSB;
-	ctrl_phs <<= 3;
-	ctrl_phs |= 0x04; // R/W = 1, OM = 00 
-	uint32_t val = (addr << 16) | (ctrl_phs << 8) | (data);
-	HAL_SPI_Transmit(&hspi1, &val, 4, 100);
+	HAL_SPI_TransmitReceive(&hspi3, wr_val, rd_val, 4, 100);
 
 	HAL_GPIO_WritePin(GPIOB, ENET_SCSn_Pin, GPIO_PIN_SET);
 }
@@ -70,11 +66,6 @@ void eth_Read_nByte(uint16_t addr, uint8_t BSB, uint8_t data[], int datasize) {
 
 	HAL_GPIO_WritePin(GPIOB, ENET_SCSn_Pin, GPIO_PIN_RESET);
 
-	uint16_t ctrl_phs = BSB;
-	ctrl_phs <<= 3
-	ctrl_phs |= 0x04; // R/W = 1, OM = 00 
-	uint32_t val = (addr << 16) | (ctrl_phs << 8) | (data);
-	HAL_SPI_Transmit(&hspi1, &val, 4, 100);
 
 	HAL_GPIO_WritePin(GPIOB, ENET_SCSn_Pin, GPIO_PIN_SET);
 }
