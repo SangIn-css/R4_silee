@@ -84,7 +84,9 @@ extern "C" {
 void eth_Init();
 void eth_Write_1Byte(uint16_t addr, uint8_t BSB, uint8_t data);
 void eth_Write_nByte(uint16_t addr, uint8_t BSB, uint8_t data[], int datasize);
-void eth_Read_1Byte(uint16_t addr, uint8_t BSB, uint8_t data);
+uint8_t eth_Read_1Byte(uint16_t addr, uint8_t BSB);
+void eth_Read_nByte(uint16_t addr, uint8_t BSB, uint8_t data[], int datasize);
+void transmit_1Byte(uint8_t data);
 
 #ifdef __cplusplus
 }

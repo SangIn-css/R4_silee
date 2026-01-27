@@ -125,7 +125,9 @@ int main(void)
   HAL_GPIO_WritePin(GPIOB,IND_GRN_LED_PB09_Pin,GPIO_PIN_SET);
   HAL_UART_Receive_IT(&huart1, &rx_ch, 1);		// use for UART (TeraTerm)
   Com_Init();
+  __HAL_SPI_ENABLE(&hspi1);
   __HAL_SPI_ENABLE(&hspi2);
+  __HAL_SPI_ENABLE(&hspi3);
   TDC_Init();
   /* USER CODE END 2 */
 
