@@ -23,7 +23,6 @@ void eth_Init()
 	eth_Write_nByte(addr3, BSB3, data3, 4);
 }
 
-
 void eth_Write_1Byte(uint16_t addr, uint8_t BSB, uint8_t data) {
 
 	uint8_t addr1 = (uint8_t)(addr >> 8);
@@ -69,28 +68,27 @@ void eth_Write_nByte(uint16_t addr, uint8_t BSB, uint8_t data[], int datasize) {
 uint8_t eth_Read_1Byte(uint16_t addr, uint8_t BSB) {
 
 	uint8_t rd_val;
-	
-	HAL_GPIO_WritePin(GPIOB, ENET_SCSn_Pin, GPIO_PIN_RESET);
-
 	uint8_t addr1 = (uint8_t)(addr >> 8);
 	uint8_t addr2 = (uint8_t)(addr & 0x00FF);
 	uint8_t ctrl_phs = BSB;
 	ctrl_phs <<= 3;
 	ctrl_phs |= 0x00; // R/W = 0, OM = 00
+	
+	HAL_GPIO_WritePin(GPIOB, ENET_SCSn_Pin, GPIO_PIN_RESET);
 
 	transmit_1Byte(addr1);
 	transmit_1Byte(addr2);
 	transmit_1Byte(ctrl_phs);
 
-	// SPI1->DR = 0x00; // Dummy Write;
-	// while ((SPI1->SR & SPI_FLAG_TXE) == RESET) { ; }
-	// while ((SPI1->SR & SPI_FLAG_RXNE) == RESET){ ; }
+	SPI1->DR = 0x01; // Dummy Write;
+	while ((SPI1->SR & SPI_FLAG_TXE) == RESET) { ; }
+	while ((SPI1->SR & SPI_FLAG_RXNE) == RESET){ ; }
 	rd_val = SPI1->DR;
 
 	HAL_GPIO_WritePin(GPIOB, ENET_SCSn_Pin, GPIO_PIN_SET);
 
-	return rd_val;
 	printf("read Complete\n");
+	return rd_val;
 }
 
 void eth_Read_nByte(uint16_t addr, uint8_t BSB, uint8_t data[], int datasize) {
