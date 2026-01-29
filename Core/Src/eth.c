@@ -83,11 +83,11 @@ uint8_t eth_Read_1Byte(uint16_t addr, uint8_t BSB) {
 	SPI1->DR = 0x01;
 	while ((SPI1->SR & SPI_FLAG_TXE) == RESET) { ; }
 	while ((SPI1->SR & SPI_FLAG_RXNE) == RESET){ ; }
+
+    printf("CR1=%04x SR=%04x\r\n", SPI1->CR1, SPI1->SR);
 	rd_val = SPI1->DR;
-
- 	while (SPI1->SR & SPI_SR_BSY) {}
-
-    printf("CR1=%04lX SR=%04lX\r\n", SPI1->CR1, SPI1->SR);
+	printf("CR1=%04x SR=%04x\r\n", SPI1->CR1, SPI1->SR);
+	printf("rd_val=0x%02X\r\n", rd_val);
 
 	HAL_GPIO_WritePin(GPIOB, ENET_SCSn_Pin, GPIO_PIN_SET);
 
@@ -104,6 +104,7 @@ void eth_Read_nByte(uint16_t addr, uint8_t BSB, uint8_t data[], int datasize) {
 }
 
 void transmit_1Byte(uint8_t data) {
+
 	SPI1->DR = data;
 	while ((SPI1->SR & SPI_FLAG_TXE) == RESET) { ; }
 	while ((SPI1->SR & SPI_FLAG_RXNE) == RESET){ ; }
