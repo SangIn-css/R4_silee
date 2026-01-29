@@ -1,4 +1,4 @@
 ../Drivers/CMSIS/Include/core_cm4.h:1938:34:__NVIC_SystemReset	1
 ../Core/Src/com.c:34:6:Com_Init	1
 ../Core/Src/com.c:40:6:Com_DoCommand	9
-../Core/Src/com.c:99:6:Com_OnRxChar	3
+../Core/Src/com.c:100:6:Com_OnRxChar	3

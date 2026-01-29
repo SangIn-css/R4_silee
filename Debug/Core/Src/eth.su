@@ -1,6 +1,6 @@
 ../Core/Src/eth.c:8:6:eth_Init	32	static
-../Core/Src/eth.c:27:6:eth_Write_1Byte	24	static
-../Core/Src/eth.c:46:6:eth_Write_nByte	32	static
-../Core/Src/eth.c:69:9:eth_Read_1Byte	24	static
-../Core/Src/eth.c:95:6:eth_Read_nByte	24	static
-../Core/Src/eth.c:103:6:transmit_1Byte	16	static
+../Core/Src/eth.c:26:6:eth_Write_1Byte	24	static
+../Core/Src/eth.c:45:6:eth_Write_nByte	32	static
+../Core/Src/eth.c:68:9:eth_Read_1Byte	24	static
+../Core/Src/eth.c:98:6:eth_Read_nByte	24	static
+../Core/Src/eth.c:106:6:transmit_1Byte	16	static
