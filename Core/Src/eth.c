@@ -7,6 +7,11 @@
 
 void eth_Init()
 {
+	HAL_GPIO_WritePin(GPIOB, ENET_RSTn_Pin, GPIO_PIN_RESET);    // Reset Low
+    HAL_Delay(5);
+    HAL_GPIO_WritePin(GPIOB, ENET_RSTn_Pin, GPIO_PIN_SET);
+    HAL_Delay(20);
+
 	uint16_t addr1 = GAR;
 	uint8_t BSB1 = Common_Register;
 	uint8_t data1[4] = {0xC0, 0xA8, 0x7B, 0x01}; // Default Gateway Address : 192.168.123.1
@@ -39,7 +44,6 @@ void eth_Write_1Byte(uint16_t addr, uint8_t BSB, uint8_t data) {
 	transmit_1Byte(data);
 
 	HAL_GPIO_WritePin(GPIOB, ENET_SCSn_Pin, GPIO_PIN_SET);
-	printf("1 Complete\n");
 }
 
 void eth_Write_nByte(uint16_t addr, uint8_t BSB, uint8_t data[], int datasize) {
@@ -61,7 +65,6 @@ void eth_Write_nByte(uint16_t addr, uint8_t BSB, uint8_t data[], int datasize) {
 	}
 
 	HAL_GPIO_WritePin(GPIOB, ENET_SCSn_Pin, GPIO_PIN_SET);
-	printf("n Complete\n");
 }
 
 
@@ -84,11 +87,9 @@ uint8_t eth_Read_1Byte(uint16_t addr, uint8_t BSB) {
 	SPI1->DR = 0x01;
 	while ((SPI1->SR & SPI_FLAG_TXE) == RESET) { ; }
 	while ((SPI1->SR & SPI_FLAG_RXNE) == RESET){ ; }
-
-
 	rd_val = SPI1->DR;
 
-	while (SPI1->SR & SPI_SR_BSY == RESET) {;}
+	while (SPI1->SR & SPI_SR_BSY == RESET) { ; }
 
 	HAL_GPIO_WritePin(GPIOB, ENET_SCSn_Pin, GPIO_PIN_SET);
 
