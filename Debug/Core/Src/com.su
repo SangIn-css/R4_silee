@@ -1,4 +1,4 @@
 ../Drivers/CMSIS/Include/core_cm4.h:1938:34:__NVIC_SystemReset	4	static,ignoring_inline_asm
 ../Core/Src/com.c:34:6:Com_Init	8	static
 ../Core/Src/com.c:40:6:Com_DoCommand	24	static
-../Core/Src/com.c:100:6:Com_OnRxChar	16	static
+../Core/Src/com.c:105:6:Com_OnRxChar	16	static

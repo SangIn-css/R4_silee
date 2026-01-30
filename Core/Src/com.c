@@ -82,10 +82,15 @@ void Com_DoCommand(const char *line)
 
     //ETHE
     else if (strstr(line, "ETHE")) {
+        HAL_GPIO_WritePin(GPIOB, ENET_RSTn_Pin, GPIO_PIN_RESET);    // Reset Low
+        HAL_Delay(5);
+        HAL_GPIO_WritePin(GPIOB, ENET_RSTn_Pin, GPIO_PIN_SET);
+        HAL_Delay(20);
+
         // eth_Init();
         eth_Write_1Byte(0x0003, 11101, 0x17);
-        printf("Write Value: %02lx\n", eth_Read_1Byte(0x0003, 11101));
         printf("Read Value: %02lx\n", eth_Read_1Byte(VERSIONR, Common_Register));
+
     }
 
     else {
