@@ -105,9 +105,7 @@ void eth_Read_nByte(uint16_t addr, uint8_t BSB, uint8_t data[], int datasize) {
 }
 
 void transmit_1Byte(uint8_t data) {
-
-	uint8_t rd_val;
-
+	
 	SPI1->DR = data;
 	while ((SPI1->SR & SPI_FLAG_TXE) == RESET) { ; }
 	while ((SPI1->SR & SPI_FLAG_RXNE) == RESET){ ; }

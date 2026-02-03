@@ -95,8 +95,7 @@ void Com_DoCommand(const char *line)
 }
 
 
-void Com_OnRxChar(uint8_t ch)
-{
+void Com_OnRxChar(uint8_t ch) {
     if (ch == '\r') {
         line[idx] = '\0';
         Com_DoCommand((char*)line);
