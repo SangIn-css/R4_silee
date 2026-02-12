@@ -7,7 +7,7 @@
 
 void eth_Init()
 {
-	HAL_GPIO_WritePin(GPIOB, ENET_RSTn_Pin, GPIO_PIN_RESET);    // Reset Low
+	HAL_GPIO_WritePin(GPIOB, ENET_RSTn_Pin, GPIO_PIN_RESET);    // RSTn Pin Low
     HAL_Delay(5);
     HAL_GPIO_WritePin(GPIOB, ENET_RSTn_Pin, GPIO_PIN_SET);
     HAL_Delay(20);
@@ -55,9 +55,7 @@ void eth_Write_nByte(uint16_t addr, uint8_t BSB, uint8_t data[], int datasize) {
 	uint8_t ctrl_phs = BSB;
 	ctrl_phs <<= 3;
 	ctrl_phs |= 0x04; // R/W = 1, OM = 00
-
 	transmit_1Byte(addr1);
-	transmit_1Byte(addr2);
 	transmit_1Byte(ctrl_phs);
 
 	for(int i=0; i<datasize; i++) {
@@ -66,7 +64,6 @@ void eth_Write_nByte(uint16_t addr, uint8_t BSB, uint8_t data[], int datasize) {
 
 	HAL_GPIO_WritePin(GPIOB, ENET_SCSn_Pin, GPIO_PIN_SET);
 }
-
 
 uint8_t eth_Read_1Byte(uint16_t addr, uint8_t BSB) {
 
@@ -84,33 +81,53 @@ uint8_t eth_Read_1Byte(uint16_t addr, uint8_t BSB) {
 	transmit_1Byte(ctrl_phs);
 
 
-	SPI1->DR = 0x01;
+	SPI1->DR = 0x01;	// dummy value
 	while ((SPI1->SR & SPI_FLAG_TXE) == RESET) { ; }
 	while ((SPI1->SR & SPI_FLAG_RXNE) == RESET){ ; }
 	rd_val = SPI1->DR;
 
 	while (SPI1->SR & SPI_SR_BSY == RESET) { ; }
+	
+	HAL_GPIO_WritePin(GPIOB, ENET_SCSn_Pin, GPIO_PIN_SET);
+
+	return rd_val;
+}
+
+uint8_t eth_Read_nByte(uint16_t addr, uint8_t BSB, int datasize) {
+
+	HAL_GPIO_WritePin(GPIOB, ENET_SCSn_Pin, GPIO_PIN_RESET);
+
+	uint8_t rd_val[datasize];
+	uint8_t addr1 = (uint8_t)(addr >> 8);
+	uint8_t addr2 = (uint8_t)(addr & 0x00FF);
+	uint8_t ctrl_phs = BSB;
+	ctrl_phs <<= 3;
+	ctrl_phs |= 0x04; // R/W = 1, OM = 00
+	transmit_1Byte(addr1);
+	transmit_1Byte(addr2);
+	transmit_1Byte(ctrl_phs);
+
+	for(int i=0; i<datasize; i++) {
+		SPI1->DR = 0x01;	// dummy value
+		while ((SPI1->SR & SPI_FLAG_TXE) == RESET) { ; }
+		while ((SPI1->SR & SPI_FLAG_RXNE) == RESET){ ; }
+		rd_val[i] = SPI1->DR;
+
+		while (SPI1->SR & SPI_SR_BSY == RESET) { ; }
+	}
 
 	HAL_GPIO_WritePin(GPIOB, ENET_SCSn_Pin, GPIO_PIN_SET);
 
 	return rd_val;
 }
 
-void eth_Read_nByte(uint16_t addr, uint8_t BSB, uint8_t data[], int datasize) {
-
-	HAL_GPIO_WritePin(GPIOB, ENET_SCSn_Pin, GPIO_PIN_RESET);
-
-
-	HAL_GPIO_WritePin(GPIOB, ENET_SCSn_Pin, GPIO_PIN_SET);
-}
-
 void transmit_1Byte(uint8_t data) {
-	
+
 	SPI1->DR = data;
 	while ((SPI1->SR & SPI_FLAG_TXE) == RESET) { ; }
 	while ((SPI1->SR & SPI_FLAG_RXNE) == RESET){ ; }
 	SPI1->DR;
 
-	while (SPI1->SR & SPI_SR_BSY == RESET) {;}
+	while (SPI1->SR & SPI_SR_BSY == RESET) { ; }
 
 }

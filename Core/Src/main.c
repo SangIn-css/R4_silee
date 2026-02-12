@@ -142,7 +142,7 @@ int main(void)
 	  		Com_OnRxChar(rx_ch);
 	  		HAL_UART_Receive_IT(&huart1, &rx_ch, 1);
 	  		com_Flag = 0;
-	  	 }
+	  	}
 
 		  if(LD_Flag == 1) {
 			  LD_ON();
